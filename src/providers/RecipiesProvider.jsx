@@ -1,9 +1,23 @@
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, { useState } from 'react';
 import RecipiesContext from '../contexts/RecipiesContext';
 
 export default function RecipiesProvider({ children }) {
-  return <RecipiesContext.Provider>{children}</RecipiesContext.Provider>;
+  const [isValidEmail, setValidEmail] = useState(false);
+  const [isValidPassword, setValidPassword] = useState(false);
+
+  const contextValue = {
+    isValidEmail,
+    setValidEmail,
+    isValidPassword,
+    setValidPassword,
+  };
+
+  return (
+    <RecipiesContext.Provider value={ contextValue }>
+      {children}
+    </RecipiesContext.Provider>
+  );
 }
 
 RecipiesProvider.propTypes = {
