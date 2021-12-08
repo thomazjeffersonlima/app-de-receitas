@@ -5,6 +5,7 @@ import RecipiesContext from '../contexts/RecipiesContext';
 import profileIcon from '../images/profileIcon.svg';
 import searchIcon from '../images/searchIcon.svg';
 import fetchRecipies from '../services/fetchApi';
+import '../styles/Header.css';
 
 export default function Header({ title }) {
   const { setFoodsRecipies } = useContext(RecipiesContext);
@@ -37,27 +38,34 @@ export default function Header({ title }) {
   };
 
   return (
-    <div>
-      <Link to="/perfil">
+    <div className="header-wrapper">
+      <div className="header-container">
+        <Link to="/perfil">
+          <input
+            type="image"
+            src={ profileIcon }
+            alt="profile icon"
+            data-testid="profile-top-btn"
+          />
+        </Link>
+        <h1 data-testid="page-title">{title}</h1>
         <input
           type="image"
-          src={ profileIcon }
-          alt="profile icon"
-          data-testid="profile-top-btn"
+          src={ searchIcon }
+          alt="search icon"
+          data-testid="search-top-btn"
+          onClick={ () => setShowSearchBar(!showSearchBar) }
         />
-      </Link>
-      <h1 data-testid="page-title">{title}</h1>
-      <input
-        type="image"
-        src={ searchIcon }
-        alt="search icon"
-        data-testid="search-top-btn"
-        onClick={ () => setShowSearchBar(!showSearchBar) }
-      />
+      </div>
       {showSearchBar && (
-        <div>
-          <input type="text" data-testid="search-input" onChange={ handleSearchInput } />
-          <div>
+        <div className="header-filter">
+          <input
+            type="text"
+            data-testid="search-input"
+            className="header-search-bar"
+            onChange={ handleSearchInput }
+          />
+          <div className="header-options">
             <label htmlFor="ingredient">
               <input
                 type="radio"
@@ -92,7 +100,11 @@ export default function Header({ title }) {
               Primeira Letra
             </label>
           </div>
-          <button type="button" data-testid="exec-search-btn" onClick={ handleSearch }>
+          <button
+            type="button"
+            data-testid="exec-search-btn"
+            onClick={ handleSearch }
+          >
             Buscar
           </button>
         </div>
