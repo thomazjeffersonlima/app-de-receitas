@@ -25,7 +25,43 @@ export default function Header({ title }) {
         data-testid="search-top-btn"
         onClick={ () => setShowSearchBar(!showSearchBar) }
       />
-      {showSearchBar && <input type="text" data-testid="search-input" />}
+      {showSearchBar && (
+        <div>
+          <input type="text" data-testid="search-input" />
+          <div>
+            <label htmlFor="ingredient">
+              <input
+                type="radio"
+                name="filterOptions"
+                id="ingredient"
+                data-testid="ingredient-search-radio"
+              />
+              Ingrediente
+            </label>
+            <label htmlFor="name">
+              <input
+                type="radio"
+                name="filterOptions"
+                id="name"
+                data-testid="name-search-radio"
+              />
+              Nome
+            </label>
+            <label htmlFor="first-letter">
+              <input
+                type="radio"
+                name="filterOptions"
+                id="first-letter"
+                data-testid="first-letter-search-radio"
+              />
+              Primeira Letra
+            </label>
+          </div>
+          <button type="button" data-testid="exec-search-btn">
+            Buscar
+          </button>
+        </div>
+      )}
     </div>
   );
 }
