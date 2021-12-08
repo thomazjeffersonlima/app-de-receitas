@@ -1,8 +1,9 @@
+import PropTypes from 'prop-types';
 import React, { useContext, useState } from 'react';
 import RecipiesContext from '../contexts/RecipiesContext';
 import rockGlass from '../images/rockGlass.svg';
 
-export default function Login() {
+export default function Login({ history }) {
   const {
     isValidEmail,
     setValidEmail,
@@ -32,10 +33,12 @@ export default function Login() {
     }
   };
 
-  const saveTokens = () => {
+  const handleSubmit = () => {
     localStorage.setItem('mealsToken', '1');
     localStorage.setItem('cocktailsToken', '1');
     localStorage.setItem('user', JSON.stringify({ email: emailValue }));
+
+    history.push('/comidas');
   };
 
   return (
@@ -62,7 +65,7 @@ export default function Login() {
           type="button"
           data-testid="login-submit-btn"
           disabled={ !(isValidEmail && isValidPassword) }
-          onClick={ saveTokens }
+          onClick={ handleSubmit }
         >
           Entrar
         </button>
@@ -70,3 +73,9 @@ export default function Login() {
     </div>
   );
 }
+
+Login.propTypes = {
+  history: PropTypes.shape({
+    push: PropTypes.func,
+  }).isRequired,
+};
