@@ -5,12 +5,15 @@ import RecipiesContext from '../contexts/RecipiesContext';
 export default function RecipiesProvider({ children }) {
   const [isValidEmail, setValidEmail] = useState(false);
   const [isValidPassword, setValidPassword] = useState(false);
+  const [foodsRecipies, setFoodsRecipies] = useState([]);
 
   const contextValue = {
     isValidEmail,
     setValidEmail,
     isValidPassword,
     setValidPassword,
+    foodsRecipies,
+    setFoodsRecipies,
   };
 
   return (

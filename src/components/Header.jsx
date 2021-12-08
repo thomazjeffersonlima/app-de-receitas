@@ -1,11 +1,40 @@
 import PropTypes from 'prop-types';
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { Link } from 'react-router-dom';
+import RecipiesContext from '../contexts/RecipiesContext';
 import profileIcon from '../images/profileIcon.svg';
 import searchIcon from '../images/searchIcon.svg';
+import fetchRecipies from '../services/fetchApi';
 
 export default function Header({ title }) {
+  const { setFoodsRecipies } = useContext(RecipiesContext);
+
   const [showSearchBar, setShowSearchBar] = useState(false);
+  const [filter, setFilter] = useState('');
+  const [radioFilter, setRadioFilter] = useState('');
+  const [searchValue, setSearchValue] = useState('');
+
+  const handleFilter = ({ target: { value, id } }) => {
+    setRadioFilter(id);
+    if (value === 'i') {
+      setFilter(`filter.php?${value}`);
+    } else {
+      setFilter(`search.php?${value}`);
+    }
+  };
+
+  const handleSearchInput = ({ target: { value } }) => {
+    setSearchValue(value);
+  };
+
+  const handleSearch = async () => {
+    if (radioFilter === 'first-letter' && searchValue.length > 1) {
+      global.alert('Sua busca deve conter somente 1 (um) caracter');
+    } else {
+      const apiReturn = await fetchRecipies(title, `${filter}=${searchValue}`);
+      setFoodsRecipies(apiReturn);
+    }
+  };
 
   return (
     <div>
@@ -27,7 +56,7 @@ export default function Header({ title }) {
       />
       {showSearchBar && (
         <div>
-          <input type="text" data-testid="search-input" />
+          <input type="text" data-testid="search-input" onChange={ handleSearchInput } />
           <div>
             <label htmlFor="ingredient">
               <input
@@ -35,6 +64,8 @@ export default function Header({ title }) {
                 name="filterOptions"
                 id="ingredient"
                 data-testid="ingredient-search-radio"
+                value="i"
+                onChange={ handleFilter }
               />
               Ingrediente
             </label>
@@ -44,6 +75,8 @@ export default function Header({ title }) {
                 name="filterOptions"
                 id="name"
                 data-testid="name-search-radio"
+                value="s"
+                onChange={ handleFilter }
               />
               Nome
             </label>
@@ -53,11 +86,13 @@ export default function Header({ title }) {
                 name="filterOptions"
                 id="first-letter"
                 data-testid="first-letter-search-radio"
+                value="f"
+                onChange={ handleFilter }
               />
               Primeira Letra
             </label>
           </div>
-          <button type="button" data-testid="exec-search-btn">
+          <button type="button" data-testid="exec-search-btn" onClick={ handleSearch }>
             Buscar
           </button>
         </div>
