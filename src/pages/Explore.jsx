@@ -1,11 +1,11 @@
 import React from 'react';
 import Header from '../components/Header';
 
-export default function Foods() {
+export default function Explore() {
   return (
     <>
-      <Header title="Comidas" />
-      <div>Comidas</div>
+      <Header title="Explorar" />
+      <div>Explorar</div>
     </>
   );
 }
