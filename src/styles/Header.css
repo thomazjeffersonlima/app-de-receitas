@@ -46,6 +46,18 @@
   width: 400px;
 }
 
+.header-options input {
+  border: 0;
+  height: 30px;
+  margin-right: 5px;
+  width: 15px;
+}
+
+.header-options label {
+  align-items: center;
+  display: flex;
+}
+
 .header-filter button {
   background-color: #0fa36b;
   border: none;
