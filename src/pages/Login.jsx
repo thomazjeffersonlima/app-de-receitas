@@ -2,6 +2,7 @@ import PropTypes from 'prop-types';
 import React, { useContext, useState } from 'react';
 import RecipiesContext from '../contexts/RecipiesContext';
 import rockGlass from '../images/rockGlass.svg';
+import '../styles/Login.css';
 
 export default function Login({ history }) {
   const {
@@ -47,7 +48,7 @@ export default function Login({ history }) {
       <object className="rocksGlass" type="image/svg+xml" data={ rockGlass }>
         Glass
       </object>
-      <form>
+      <form className="login-form">
         <input
           type="email"
           name="email-input"
