@@ -8,7 +8,7 @@ import fetchRecipies from '../services/fetchApi';
 import '../styles/Header.css';
 
 export default function Header({ title }) {
-  const { setFoodsRecipies } = useContext(RecipiesContext);
+  const { setFoodsRecipies, setDrinksRecipies } = useContext(RecipiesContext);
 
   const [showSearchBar, setShowSearchBar] = useState(false);
   const [filter, setFilter] = useState('');
@@ -33,7 +33,8 @@ export default function Header({ title }) {
       global.alert('Sua busca deve conter somente 1 (um) caracter');
     } else {
       const apiReturn = await fetchRecipies(title, `${filter}=${searchValue}`);
-      setFoodsRecipies(apiReturn);
+      return (title === 'Comidas')
+        ? setFoodsRecipies(apiReturn) : setDrinksRecipies(apiReturn);
     }
   };
 

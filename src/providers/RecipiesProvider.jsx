@@ -6,6 +6,7 @@ export default function RecipiesProvider({ children }) {
   const [isValidEmail, setValidEmail] = useState(false);
   const [isValidPassword, setValidPassword] = useState(false);
   const [foodsRecipies, setFoodsRecipies] = useState([]);
+  const [drinksRecipies, setDrinksRecipies] = useState([]);
 
   const contextValue = {
     isValidEmail,
@@ -14,6 +15,8 @@ export default function RecipiesProvider({ children }) {
     setValidPassword,
     foodsRecipies,
     setFoodsRecipies,
+    drinksRecipies,
+    setDrinksRecipies,
   };
 
   return (
