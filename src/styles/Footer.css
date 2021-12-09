@@ -1,8 +1,12 @@
 .footer-wrapper {
   align-items: center;
+  background-color: #c4c4c4;
   bottom: 0;
+  box-shadow: rgba(0, 0, 0, 0.35) 0 5px 15px;
   display: flex;
+  height: 70px;
   justify-content: space-around;
+  margin-bottom: -1px;
   position: fixed;
   width: 100vw;
 }
