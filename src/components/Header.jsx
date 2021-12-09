@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
-import React, { useContext, useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useContext, useState, useEffect } from 'react';
+import { Link, useHistory } from 'react-router-dom';
 import RecipiesContext from '../contexts/RecipiesContext';
 import profileIcon from '../images/profileIcon.svg';
 import searchIcon from '../images/searchIcon.svg';
@@ -8,12 +8,27 @@ import fetchRecipies from '../services/fetchApi';
 import '../styles/Header.css';
 
 export default function Header({ title }) {
-  const { setFoodsRecipies, setDrinksRecipies } = useContext(RecipiesContext);
+  const history = useHistory();
+  const {
+    foodsRecipies,
+    setFoodsRecipies,
+    drinksRecipies,
+    setDrinksRecipies,
+  } = useContext(RecipiesContext);
 
   const [showSearchBar, setShowSearchBar] = useState(false);
   const [filter, setFilter] = useState('');
   const [radioFilter, setRadioFilter] = useState('');
   const [searchValue, setSearchValue] = useState('');
+
+  useEffect(() => {
+    if (foodsRecipies.length === 1) {
+      history.push(`/comidas/${foodsRecipies[0].idMeal}`);
+    }
+    if (drinksRecipies.length === 1) {
+      history.push(`/bebidas/${drinksRecipies[0].idDrink}`);
+    }
+  }, [foodsRecipies, drinksRecipies]);
 
   const handleFilter = ({ target: { value, id } }) => {
     setRadioFilter(id);
