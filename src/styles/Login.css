@@ -1,0 +1,23 @@
+.login-form {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  height: 200px;
+  justify-content: space-around;
+  width: 400px;
+}
+
+.login-form input {
+  border: none;
+  border-radius: 5px;
+  height: 34px;
+  width: 70%;
+}
+
+.login-form button {
+  border: none;
+  border-radius: 5px;
+  box-shadow: rgba(0, 0, 0, 0.35) 0 5px 15px;
+  height: 34px;
+  width: 120px;
+}
