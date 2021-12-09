@@ -7,7 +7,16 @@ export default function Drinks() {
   return (
     <>
       <Header title="Bebidas" />
-      <div>Bebidas</div>
+      <div>
+        {
+          drinksRecipies.slice(0, 12).map(({ strDrinkThumb, strDrink }, index) => (
+            <div key={ index } data-testid={ `${index}-recipe-card` }>
+              <img src={ strDrinkThumb } alt="" data-testid={ `${index}-card-img` } />
+              <p data-testid={ `${index}-card-name` }>{ strDrink }</p>
+            </div>
+          ))
+        }
+      </div>
     </>
   );
 }
