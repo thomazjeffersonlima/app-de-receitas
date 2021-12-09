@@ -28,7 +28,7 @@ export default function Header({ title }) {
     if (drinksRecipies.length === 1) {
       history.push(`/bebidas/${drinksRecipies[0].idDrink}`);
     }
-  }, [foodsRecipies, drinksRecipies]);
+  }, [foodsRecipies, drinksRecipies, history]);
 
   const handleFilter = ({ target: { value, id } }) => {
     setRadioFilter(id);
@@ -48,6 +48,11 @@ export default function Header({ title }) {
       global.alert('Sua busca deve conter somente 1 (um) caracter');
     } else {
       const apiReturn = await fetchRecipies(title, `${filter}=${searchValue}`);
+      console.log(apiReturn);
+      if (!apiReturn || apiReturn === null) {
+        return global
+          .alert('Sinto muito, não encontramos nenhuma receita para esses filtros.');
+      }
       return (title === 'Comidas')
         ? setFoodsRecipies(apiReturn) : setDrinksRecipies(apiReturn);
     }
