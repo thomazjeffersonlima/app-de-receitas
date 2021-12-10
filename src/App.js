@@ -7,14 +7,14 @@ import Drinks from './pages/Drinks';
 import Explore from './pages/Explore';
 import Profile from './pages/Profile';
 import Details from './pages/Details';
-import RecipiesProvider from './providers/RecipiesProvider';
+import RecipesProvider from './providers/RecipesProvider';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 function App() {
   return (
     <BrowserRouter>
       <Switch>
-        <RecipiesProvider>
+        <RecipesProvider>
           <Route exact path="/" component={ Login } />
           <Route exact path="/comidas" component={ Foods } />
           <Route exact path="/bebidas" component={ Drinks } />
@@ -22,7 +22,7 @@ function App() {
           <Route exact path="/perfil" component={ Profile } />
           <Route exact path="/comidas/:id" component={ Details } />
           <Route exact path="/bebidas/:id" component={ Details } />
-        </RecipiesProvider>
+        </RecipesProvider>
       </Switch>
     </BrowserRouter>
   );

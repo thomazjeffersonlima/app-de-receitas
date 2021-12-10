@@ -1,6 +1,6 @@
 .footer-wrapper {
   align-items: center;
-  background-color: #c4c4c4;
+  background-color: #212121;
   bottom: 0;
   box-shadow: rgba(0, 0, 0, 0.35) 0 5px 15px;
   display: flex;
@@ -9,4 +9,8 @@
   margin-bottom: -1px;
   position: fixed;
   width: 100vw;
+}
+
+.footer-wrapper input {
+  filter: brightness(0) invert(1);
 }

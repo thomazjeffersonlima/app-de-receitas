@@ -1,32 +1,32 @@
 import PropTypes from 'prop-types';
 import React, { useState } from 'react';
-import RecipiesContext from '../contexts/RecipiesContext';
+import RecipesContext from '../contexts/RecipesContext';
 
-export default function RecipiesProvider({ children }) {
+export default function RecipesProvider({ children }) {
   const [isValidEmail, setValidEmail] = useState(false);
   const [isValidPassword, setValidPassword] = useState(false);
-  const [foodsRecipies, setFoodsRecipies] = useState([]);
-  const [drinksRecipies, setDrinksRecipies] = useState([]);
+  const [foodsRecipes, setFoodsRecipes] = useState([]);
+  const [drinksRecipes, setDrinksRecipes] = useState([]);
 
   const contextValue = {
     isValidEmail,
     setValidEmail,
     isValidPassword,
     setValidPassword,
-    foodsRecipies,
-    setFoodsRecipies,
-    drinksRecipies,
-    setDrinksRecipies,
+    foodsRecipes,
+    setFoodsRecipes,
+    drinksRecipes,
+    setDrinksRecipes,
   };
 
   return (
-    <RecipiesContext.Provider value={ contextValue }>
+    <RecipesContext.Provider value={ contextValue }>
       {children}
-    </RecipiesContext.Provider>
+    </RecipesContext.Provider>
   );
 }
 
-RecipiesProvider.propTypes = {
+RecipesProvider.propTypes = {
   children: PropTypes.oneOfType([
     PropTypes.arrayOf(PropTypes.node),
     PropTypes.node,

@@ -1,30 +1,30 @@
 import React, { useContext, useEffect } from 'react';
 import Header from '../components/Header';
-import RecipiesContext from '../contexts/RecipiesContext';
+import RecipesContext from '../contexts/RecipesContext';
 import Footer from '../components/Footer';
-import fetchRecipies from '../services/fetchApi';
-import '../styles/RecipiesCards.css';
+import fetchRecipes from '../services/fetchApi';
+import '../styles/RecipesCards.css';
 
 export default function Foods() {
-  const { foodsRecipies, setFoodsRecipies } = useContext(RecipiesContext);
+  const { foodsRecipes, setFoodsRecipes } = useContext(RecipesContext);
   const maxLength = 12;
 
   useEffect(() => {
     async function responseApi() {
-      const returnDefaultFoods = await fetchRecipies(
+      const returnDefaultFoods = await fetchRecipes(
         'Comidas',
         'search.php?s=',
       );
-      setFoodsRecipies(returnDefaultFoods);
+      setFoodsRecipes(returnDefaultFoods);
     }
     responseApi();
-  }, []);
+  }, [setFoodsRecipes]);
 
   return (
     <>
       <Header title="Comidas" />
-      <div className="recipies-cards">
-        {foodsRecipies
+      <div className="recipes-cards">
+        {foodsRecipes && foodsRecipes
           .slice(0, maxLength)
           .map(({ strMealThumb, strMeal }, index) => (
             <div

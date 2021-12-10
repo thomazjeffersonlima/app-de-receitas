@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import React, { useContext, useState } from 'react';
-import RecipiesContext from '../contexts/RecipiesContext';
+import RecipesContext from '../contexts/RecipesContext';
 import rockGlass from '../images/rockGlass.svg';
 import '../styles/Login.css';
 
@@ -10,7 +10,7 @@ export default function Login({ history }) {
     setValidEmail,
     isValidPassword,
     setValidPassword,
-  } = useContext(RecipiesContext);
+  } = useContext(RecipesContext);
 
   const [emailValue, setEmailValue] = useState('');
 

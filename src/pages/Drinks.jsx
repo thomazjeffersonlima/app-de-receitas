@@ -1,29 +1,30 @@
 import React, { useContext, useEffect } from 'react';
 import Header from '../components/Header';
-import RecipiesContext from '../contexts/RecipiesContext';
+import RecipesContext from '../contexts/RecipesContext';
 import Footer from '../components/Footer';
-import fetchRecipies from '../services/fetchApi';
+import fetchRecipes from '../services/fetchApi';
+import '../styles/RecipesCards.css';
 
 export default function Drinks() {
-  const { drinksRecipies, setDrinksRecipies } = useContext(RecipiesContext);
+  const { drinksRecipes, setDrinksRecipes } = useContext(RecipesContext);
   const maxLength = 12;
 
   useEffect(() => {
     async function responseApi() {
-      const returnDefaultFoods = await fetchRecipies(
+      const returnDefaultFoods = await fetchRecipes(
         'Bebidas',
         'search.php?s=',
       );
-      setDrinksRecipies(returnDefaultFoods);
+      setDrinksRecipes(returnDefaultFoods);
     }
     responseApi();
-  }, []);
+  }, [setDrinksRecipes]);
 
   return (
     <>
       <Header title="Bebidas" />
-      <div className="recipies-cards">
-        {drinksRecipies
+      <div className="recipes-cards">
+        {drinksRecipes && drinksRecipes
           .slice(0, maxLength)
           .map(({ strDrinkThumb, strDrink }, index) => (
             <div

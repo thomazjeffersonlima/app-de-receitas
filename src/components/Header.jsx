@@ -1,20 +1,20 @@
 import PropTypes from 'prop-types';
 import React, { useContext, useState, useEffect } from 'react';
 import { Link, useHistory } from 'react-router-dom';
-import RecipiesContext from '../contexts/RecipiesContext';
+import RecipesContext from '../contexts/RecipesContext';
 import profileIcon from '../images/profileIcon.svg';
 import searchIcon from '../images/searchIcon.svg';
-import fetchRecipies from '../services/fetchApi';
+import fetchRecipes from '../services/fetchApi';
 import '../styles/Header.css';
 
 export default function Header({ title }) {
   const history = useHistory();
   const {
-    foodsRecipies,
-    setFoodsRecipies,
-    drinksRecipies,
-    setDrinksRecipies,
-  } = useContext(RecipiesContext);
+    foodsRecipes,
+    setFoodsRecipes,
+    drinksRecipes,
+    setDrinksRecipes,
+  } = useContext(RecipesContext);
 
   const [showSearchBar, setShowSearchBar] = useState(false);
   const [filter, setFilter] = useState('');
@@ -22,13 +22,13 @@ export default function Header({ title }) {
   const [searchValue, setSearchValue] = useState('');
 
   useEffect(() => {
-    if (foodsRecipies.length === 1) {
-      history.push(`/comidas/${foodsRecipies[0].idMeal}`);
+    if (foodsRecipes.length === 1) {
+      history.push(`/comidas/${foodsRecipes[0].idMeal}`);
     }
-    if (drinksRecipies.length === 1) {
-      history.push(`/bebidas/${drinksRecipies[0].idDrink}`);
+    if (drinksRecipes.length === 1) {
+      history.push(`/bebidas/${drinksRecipes[0].idDrink}`);
     }
-  }, [foodsRecipies, drinksRecipies, history]);
+  }, [foodsRecipes, drinksRecipes, history]);
 
   const handleFilter = ({ target: { value, id } }) => {
     setRadioFilter(id);
@@ -47,14 +47,14 @@ export default function Header({ title }) {
     if (radioFilter === 'first-letter' && searchValue.length > 1) {
       global.alert('Sua busca deve conter somente 1 (um) caracter');
     } else {
-      const apiReturn = await fetchRecipies(title, `${filter}=${searchValue}`);
+      const apiReturn = await fetchRecipes(title, `${filter}=${searchValue}`);
       console.log(apiReturn);
       if (!apiReturn || apiReturn === null) {
         return global
           .alert('Sinto muito, não encontramos nenhuma receita para esses filtros.');
       }
       return (title === 'Comidas')
-        ? setFoodsRecipies(apiReturn) : setDrinksRecipies(apiReturn);
+        ? setFoodsRecipes(apiReturn) : setDrinksRecipes(apiReturn);
     }
   };
 
