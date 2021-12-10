@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import React, { useContext, useState, useEffect } from 'react';
+import React, { useContext, useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import RecipesContext from '../contexts/RecipesContext';
 import profileIcon from '../images/profileIcon.svg';
@@ -21,14 +21,14 @@ export default function Header({ title }) {
   const [radioFilter, setRadioFilter] = useState('');
   const [searchValue, setSearchValue] = useState('');
 
-  useEffect(() => {
+  const redirectPath = () => {
     if (foodsRecipes.length === 1) {
       history.push(`/comidas/${foodsRecipes[0].idMeal}`);
     }
     if (drinksRecipes.length === 1) {
       history.push(`/bebidas/${drinksRecipes[0].idDrink}`);
     }
-  }, [foodsRecipes, drinksRecipes, history]);
+  };
 
   const handleFilter = ({ target: { value, id } }) => {
     setRadioFilter(id);
@@ -52,8 +52,12 @@ export default function Header({ title }) {
         return global
           .alert('Sinto muito, não encontramos nenhuma receita para esses filtros.');
       }
-      return (title === 'Comidas')
-        ? setFoodsRecipes(apiReturn) : setDrinksRecipes(apiReturn);
+      if (title === 'Comidas') {
+        setFoodsRecipes(apiReturn);
+      } else {
+        setDrinksRecipes(apiReturn);
+      }
+      redirectPath();
     }
   };
 
