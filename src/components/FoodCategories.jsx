@@ -29,17 +29,28 @@ export default function FoodCategories() {
   const categoriesLength = 5;
 
   return (
-    categories.slice(0, categoriesLength).map(({ strCategory }, index) => (
+    <>
+      {
+        categories.slice(0, categoriesLength).map(({ strCategory }, index) => (
+          <button
+            type="button"
+            value={ strCategory }
+            key={ index }
+            onClick={ handleClick }
+            data-testid={ `${strCategory}-category-filter` }
+          >
+            { strCategory }
+          </button>
+        ))
+      }
       <button
         type="button"
-        value={ strCategory }
-        key={ index }
-        onClick={ handleClick }
-        toggle
-        data-testid={ `${strCategory}-category-filter` }
+        onClick={ () => setFoodsRecipes(defaultFoodRecipes) }
+        data-testid="All-category-filter"
       >
-        { strCategory }
+        All
+
       </button>
-    ))
+    </>
   );
 }

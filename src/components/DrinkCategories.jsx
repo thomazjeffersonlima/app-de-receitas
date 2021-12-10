@@ -29,7 +29,7 @@ export default function DrinkCategories() {
   const categoriesLength = 5;
 
   return (
-    <div>
+    <>
       {
         categories.length > 0 && categories
           .slice(0, categoriesLength).map(({ strCategory }, index) => (
@@ -44,6 +44,14 @@ export default function DrinkCategories() {
             </button>
           ))
       }
-    </div>
+      <button
+        type="button"
+        onClick={ () => setDrinksRecipes(defaultDrinkRecipes) }
+        data-testid="All-category-filter"
+      >
+        All
+
+      </button>
+    </>
   );
 }

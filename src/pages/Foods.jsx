@@ -7,7 +7,8 @@ import '../styles/RecipesCards.css';
 import FoodCategories from '../components/FoodCategories';
 
 export default function Foods() {
-  const { foodsRecipes, setFoodsRecipes, setDefaultFoodRecipes } = useContext(RecipesContext);
+  const { foodsRecipes, setFoodsRecipes,
+    setDefaultFoodRecipes } = useContext(RecipesContext);
   const maxLength = 12;
 
   useEffect(() => {

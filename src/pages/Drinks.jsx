@@ -21,7 +21,7 @@ export default function Drinks() {
       setDrinksRecipes(returnDefaultDrinks);
     }
     responseApi();
-  }, [setDrinksRecipes]);
+  }, [setDefaultDrinkRecipes, setDrinksRecipes]);
 
   return (
     <>
