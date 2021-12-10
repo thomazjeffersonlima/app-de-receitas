@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import React, { useContext, useState } from 'react';
-import RecipiesContext from '../contexts/RecipiesContext';
+import Button from 'react-bootstrap/Button';
+import RecipesContext from '../contexts/RecipesContext';
 import rockGlass from '../images/rockGlass.svg';
 import '../styles/Login.css';
 
@@ -10,7 +11,7 @@ export default function Login({ history }) {
     setValidEmail,
     isValidPassword,
     setValidPassword,
-  } = useContext(RecipiesContext);
+  } = useContext(RecipesContext);
 
   const [emailValue, setEmailValue] = useState('');
 
@@ -62,14 +63,14 @@ export default function Login({ history }) {
           data-testid="password-input"
           onChange={ handlePassword }
         />
-        <button
+        <Button
           type="button"
           data-testid="login-submit-btn"
           disabled={ !(isValidEmail && isValidPassword) }
           onClick={ handleSubmit }
         >
           Entrar
-        </button>
+        </Button>
       </form>
     </div>
   );

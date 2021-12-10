@@ -7,7 +7,7 @@ import '../styles/Footer.css';
 
 export default function Footer() {
   return (
-    <footer data-testid="footer">
+    <footer data-testid="footer" className="footer-wrapper">
       <Link to="/bebidas">
         <input
           type="image"
