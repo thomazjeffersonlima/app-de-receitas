@@ -50,6 +50,9 @@
 }
 
 .header-search-bar {
+  border: none;
+  border-radius: 5px;
+  height: 32px;
   width: 400px;
 }
 

@@ -48,7 +48,6 @@ export default function Header({ title }) {
       global.alert('Sua busca deve conter somente 1 (um) caracter');
     } else {
       const apiReturn = await fetchRecipes(title, `${filter}=${searchValue}`);
-      console.log(apiReturn);
       if (!apiReturn || apiReturn === null) {
         return global
           .alert('Sinto muito, não encontramos nenhuma receita para esses filtros.');
