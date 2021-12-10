@@ -7,7 +7,7 @@ import '../styles/RecipesCards.css';
 import FoodCategories from '../components/FoodCategories';
 
 export default function Foods() {
-  const { foodsRecipes, setFoodsRecipes } = useContext(RecipesContext);
+  const { foodsRecipes, setFoodsRecipes, setDefaultFoodRecipes } = useContext(RecipesContext);
   const maxLength = 12;
 
   useEffect(() => {
@@ -16,10 +16,11 @@ export default function Foods() {
         'Comidas',
         'search.php?s=',
       );
+      setDefaultFoodRecipes(returnDefaultFoods);
       setFoodsRecipes(returnDefaultFoods);
     }
     responseApi();
-  }, [setFoodsRecipes]);
+  }, [setDefaultFoodRecipes, setFoodsRecipes]);
 
   return (
     <>

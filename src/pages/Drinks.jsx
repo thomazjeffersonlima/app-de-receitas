@@ -7,16 +7,18 @@ import '../styles/RecipesCards.css';
 import DrinkCategories from '../components/DrinkCategories';
 
 export default function Drinks() {
-  const { drinksRecipes, setDrinksRecipes } = useContext(RecipesContext);
+  const { drinksRecipes, setDrinksRecipes,
+    setDefaultDrinkRecipes } = useContext(RecipesContext);
   const maxLength = 12;
 
   useEffect(() => {
     async function responseApi() {
-      const returnDefaultFoods = await fetchRecipes(
+      const returnDefaultDrinks = await fetchRecipes(
         'Bebidas',
         'search.php?s=',
       );
-      setDrinksRecipes(returnDefaultFoods);
+      setDefaultDrinkRecipes(returnDefaultDrinks);
+      setDrinksRecipes(returnDefaultDrinks);
     }
     responseApi();
   }, [setDrinksRecipes]);

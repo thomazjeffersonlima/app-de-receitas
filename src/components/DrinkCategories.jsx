@@ -4,7 +4,9 @@ import fetchByCategory from '../services/fetchByCategory';
 
 export default function DrinkCategories() {
   const [categories, setCategories] = useState([]);
-  const { setDrinksRecipes } = useContext(RecipesContext);
+  const { setDrinksRecipes, defaultDrinkRecipes } = useContext(RecipesContext);
+  const [boolean, setBoolean] = useState(true);
+  const [selectedCategory, setSelectedCategory] = useState('');
 
   useEffect(() => {
     fetch('https://www.thecocktaildb.com/api/json/v1/1/list.php?c=list')
@@ -14,7 +16,15 @@ export default function DrinkCategories() {
 
   const handleClick = async ({ target: { value } }) => {
     const categoriesResponse = await fetchByCategory('Bebidas', value);
-    setDrinksRecipes(categoriesResponse);
+
+    if (boolean === true || selectedCategory !== value) {
+      setDrinksRecipes(categoriesResponse);
+      setBoolean(false);
+    } else {
+      setDrinksRecipes(defaultDrinkRecipes);
+      setBoolean(true);
+    }
+    setSelectedCategory(value);
   };
   const categoriesLength = 5;
 
