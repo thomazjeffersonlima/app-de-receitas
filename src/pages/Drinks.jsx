@@ -4,6 +4,7 @@ import RecipesContext from '../contexts/RecipesContext';
 import Footer from '../components/Footer';
 import fetchRecipes from '../services/fetchApi';
 import '../styles/RecipesCards.css';
+import DrinkCategories from '../components/DrinkCategories';
 
 export default function Drinks() {
   const { drinksRecipes, setDrinksRecipes } = useContext(RecipesContext);
@@ -23,6 +24,7 @@ export default function Drinks() {
   return (
     <>
       <Header title="Bebidas" />
+      <DrinkCategories />
       <div className="recipes-cards">
         {drinksRecipes && drinksRecipes
           .slice(0, maxLength)
