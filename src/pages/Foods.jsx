@@ -1,4 +1,5 @@
 import React, { useContext, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import Header from '../components/Header';
 import RecipesContext from '../contexts/RecipesContext';
 import Footer from '../components/Footer';
@@ -30,19 +31,20 @@ export default function Foods() {
       <div className="recipes-cards">
         {foodsRecipes && foodsRecipes
           .slice(0, maxLength)
-          .map(({ strMealThumb, strMeal }, index) => (
-            <div
-              key={ index }
-              data-testid={ `${index}-recipe-card` }
-              className="recipe-card"
-            >
-              <img
-                src={ strMealThumb }
-                alt=""
-                data-testid={ `${index}-card-img` }
-              />
-              <p data-testid={ `${index}-card-name` }>{strMeal}</p>
-            </div>
+          .map(({ strMealThumb, strMeal, idMeal }, index) => (
+            <Link key={ index } to={ `/comidas/${idMeal}` }>
+              <div
+                data-testid={ `${index}-recipe-card` }
+                className="recipe-card"
+              >
+                <img
+                  src={ strMealThumb }
+                  alt=""
+                  data-testid={ `${index}-card-img` }
+                />
+                <p data-testid={ `${index}-card-name` }>{strMeal}</p>
+              </div>
+            </Link>
           ))}
       </div>
       <Footer />
