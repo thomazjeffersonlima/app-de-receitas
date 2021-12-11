@@ -11,6 +11,8 @@ import RecipesProvider from './providers/RecipesProvider';
 import ExploreFoods from './pages/ExploreFoods';
 import ExploreDrinks from './pages/ExploreDrinks';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import ExploreByIngredients from './pages/ExploreByIngredients';
+import ExploreByArea from './pages/ExploreByArea';
 
 function App() {
   return (
@@ -26,6 +28,12 @@ function App() {
           <Route exact path="/bebidas/:id" component={ Details } />
           <Route exact path="/explorar/comidas" component={ ExploreFoods } />
           <Route exact path="/explorar/bebidas" component={ ExploreDrinks } />
+          <Route exact path="/explorar/comidas/area" component={ ExploreByArea } />
+          <Route
+            exact
+            path="/explorar/:path/ingredientes"
+            component={ ExploreByIngredients }
+          />
         </RecipesProvider>
       </Switch>
     </BrowserRouter>
