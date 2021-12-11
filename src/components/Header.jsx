@@ -7,7 +7,7 @@ import searchIcon from '../images/searchIcon.svg';
 import fetchRecipes from '../services/fetchApi';
 import '../styles/Header.css';
 
-export default function Header({ title }) {
+export default function Header({ title, searchHidden }) {
   const history = useHistory();
   const {
     foodsRecipes,
@@ -80,13 +80,15 @@ export default function Header({ title }) {
           />
         </Link>
         <h1 data-testid="page-title">{title}</h1>
-        <input
-          type="image"
-          src={ searchIcon }
-          alt="search icon"
-          data-testid="search-top-btn"
-          onClick={ () => setShowSearchBar(!showSearchBar) }
-        />
+        {!searchHidden && (
+          <input
+            type="image"
+            src={ searchIcon }
+            alt="search icon"
+            data-testid="search-top-btn"
+            onClick={ () => setShowSearchBar(!showSearchBar) }
+          />
+        )}
       </div>
       {showSearchBar && (
         <div className="header-filter">
@@ -146,4 +148,9 @@ export default function Header({ title }) {
 
 Header.propTypes = {
   title: PropTypes.string.isRequired,
+  searchHidden: PropTypes.bool,
+};
+
+Header.defaultProps = {
+  searchHidden: false,
 };
