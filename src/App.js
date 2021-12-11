@@ -8,6 +8,8 @@ import Explore from './pages/Explore';
 import Profile from './pages/Profile';
 import Details from './pages/Details';
 import RecipesProvider from './providers/RecipesProvider';
+import ExploreFoods from './pages/ExploreFoods';
+import ExploreDrinks from './pages/ExploreDrinks';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 function App() {
@@ -22,6 +24,8 @@ function App() {
           <Route exact path="/perfil" component={ Profile } />
           <Route exact path="/comidas/:id" component={ Details } />
           <Route exact path="/bebidas/:id" component={ Details } />
+          <Route exact path="/explorar/comidas" component={ ExploreFoods } />
+          <Route exact path="/explorar/bebidas" component={ ExploreDrinks } />
         </RecipesProvider>
       </Switch>
     </BrowserRouter>
