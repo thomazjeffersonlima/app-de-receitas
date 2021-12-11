@@ -19,7 +19,9 @@ export default function ExploreFoods() {
     <>
       <Header title="Explorar Comidas" searchHidden />
       <div>
-        <Link to="/explorar/comidas/ingredientes">
+        <Link
+          to="/explorar/comidas/ingredientes"
+        >
           <button type="button" data-testid="explore-by-ingredient">
             Por Ingredientes
           </button>
