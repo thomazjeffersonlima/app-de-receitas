@@ -24,13 +24,13 @@ export default function Header({ title, searchHidden }) {
   useEffect(() => {
     const CATEGORY_LENGTH = 3;
     if (
-      foodsRecipes.length === 1
+      (foodsRecipes && foodsRecipes.length === 1)
       && Object.keys(foodsRecipes[0]).length > CATEGORY_LENGTH
     ) {
       history.push(`/comidas/${foodsRecipes[0].idMeal}`);
     }
     if (
-      drinksRecipes.length === 1
+      (drinksRecipes && drinksRecipes.length === 1)
       && Object.keys(drinksRecipes[0]).length > CATEGORY_LENGTH
     ) {
       history.push(`/bebidas/${drinksRecipes[0].idDrink}`);
