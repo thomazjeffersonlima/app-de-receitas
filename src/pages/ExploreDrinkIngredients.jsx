@@ -2,8 +2,9 @@ import React, { useEffect, useState } from 'react';
 import Footer from '../components/Footer';
 import Header from '../components/Header';
 import { fetchDrinksIngredients } from '../services/fetchIngredients';
+import '../styles/Ingredients.css';
 
-export default function ExploreByDrinkIngredients() {
+export default function ExploreDrinkIngredients() {
   const [drinksIngredients, setDrinksIngredients] = useState([]);
 
   useEffect(() => {
@@ -23,7 +24,11 @@ export default function ExploreByDrinkIngredients() {
         {drinksIngredients
           .slice(0, MAX_INGREDIENTS)
           .map(({ strIngredient1 }, index) => (
-            <div key={ index } data-testid={ `${index}-ingredient-card` }>
+            <div
+              key={ index }
+              className="ingredient-card"
+              data-testid={ `${index}-ingredient-card` }
+            >
               <img
                 src={ `https://www.thecocktaildb.com/images/ingredients/${strIngredient1}-Small.png` }
                 alt=""

@@ -11,8 +11,8 @@ import RecipesProvider from './providers/RecipesProvider';
 import ExploreFoods from './pages/ExploreFoods';
 import ExploreDrinks from './pages/ExploreDrinks';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import ExploreByDrinkIngredients from './pages/ExploreByDrinkIngredients';
-import ExploreByFoodIngredients from './pages/ExploreFoodIngredients';
+import ExploreDrinkIngredients from './pages/ExploreDrinkIngredients';
+import ExploreFoodIngredients from './pages/ExploreFoodIngredients';
 import ExploreByArea from './pages/ExploreByArea';
 
 function App() {
@@ -37,12 +37,12 @@ function App() {
           <Route
             exact
             path="/explorar/bebidas/ingredientes"
-            component={ ExploreByDrinkIngredients }
+            component={ ExploreDrinkIngredients }
           />
           <Route
             exact
             path="/explorar/comidas/ingredientes"
-            component={ ExploreByFoodIngredients }
+            component={ ExploreFoodIngredients }
           />
         </RecipesProvider>
       </Switch>

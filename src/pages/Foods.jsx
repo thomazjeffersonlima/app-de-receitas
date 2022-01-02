@@ -24,6 +24,8 @@ export default function Foods() {
     responseApi();
   }, [setDefaultFoodRecipes, setFoodsRecipes]);
 
+  const DESCRIPTION_LENGTH = 80;
+
   return (
     <>
       <Header title="Comidas" />
@@ -31,7 +33,7 @@ export default function Foods() {
       <div className="recipes-cards">
         {foodsRecipes && foodsRecipes
           .slice(0, maxLength)
-          .map(({ strMealThumb, strMeal, idMeal }, index) => (
+          .map(({ strMealThumb, strMeal, idMeal, strInstructions }, index) => (
             <Link key={ index } to={ `/comidas/${idMeal}` }>
               <div
                 data-testid={ `${index}-recipe-card` }
@@ -42,7 +44,12 @@ export default function Foods() {
                   alt=""
                   data-testid={ `${index}-card-img` }
                 />
-                <p data-testid={ `${index}-card-name` }>{strMeal}</p>
+                <p data-testid={ `${index}-card-name` } className="recipe-name">
+                  {strMeal}
+                </p>
+                <p className="recipe-description">
+                  {`${strInstructions.slice(0, DESCRIPTION_LENGTH)}...`}
+                </p>
               </div>
             </Link>
           ))}

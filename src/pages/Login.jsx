@@ -1,8 +1,8 @@
 import PropTypes from 'prop-types';
 import React, { useContext, useState } from 'react';
-import Button from 'react-bootstrap/Button';
 import RecipesContext from '../contexts/RecipesContext';
-import rockGlass from '../images/rockGlass.svg';
+import deconstructedFoodSvg from '../images/Deconstructed-food.svg';
+import waveSvg from '../images/wave.png';
 import '../styles/Login.css';
 
 export default function Login({ history }) {
@@ -44,35 +44,43 @@ export default function Login({ history }) {
   };
 
   return (
-    <div className="meals">
-      <span className="logo">TRYBE</span>
-      <object className="rocksGlass" type="image/svg+xml" data={ rockGlass }>
-        Glass
-      </object>
-      <form className="login-form">
-        <input
-          type="email"
-          name="email-input"
-          data-testid="email-input"
-          autoComplete="false"
-          onChange={ handleEmail }
-        />
-        <input
-          type="password"
-          name="password-input"
-          data-testid="password-input"
-          onChange={ handlePassword }
-        />
-        <Button
-          type="button"
-          data-testid="login-submit-btn"
-          disabled={ !(isValidEmail && isValidPassword) }
-          onClick={ handleSubmit }
-        >
-          Entrar
-        </Button>
-      </form>
-    </div>
+    <>
+      <img src={ waveSvg } alt="wave" className="login-wave" />
+      <div className="meals">
+        <object className="login-img" type="image/svg+xml" data={ deconstructedFoodSvg }>
+          Glass
+        </object>
+        <form className="login-form">
+          <label htmlFor="email-input">
+            Email
+            <input
+              type="email"
+              name="email-input"
+              data-testid="email-input"
+              autoComplete="false"
+              onChange={ handleEmail }
+            />
+          </label>
+          <label htmlFor="password-input">
+            Password
+            <input
+              type="password"
+              name="password-input"
+              data-testid="password-input"
+              onChange={ handlePassword }
+            />
+          </label>
+          <button
+            type="button"
+            data-testid="login-submit-btn"
+            disabled={ !(isValidEmail && isValidPassword) }
+            onClick={ handleSubmit }
+          >
+            Entrar
+          </button>
+        </form>
+      </div>
+    </>
   );
 }
 

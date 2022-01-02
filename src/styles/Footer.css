@@ -1,6 +1,6 @@
 .footer-wrapper {
   align-items: center;
-  background-color: #212121;
+  background-color: var(--main-green);
   bottom: 0;
   box-shadow: rgba(0, 0, 0, 0.35) 0 5px 15px;
   display: flex;

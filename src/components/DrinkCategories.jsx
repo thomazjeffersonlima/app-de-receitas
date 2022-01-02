@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import RecipesContext from '../contexts/RecipesContext';
 import fetchByCategory from '../services/fetchByCategory';
+import '../styles/FoodDrinkCategories.css';
 
 export default function DrinkCategories() {
   const [categories, setCategories] = useState([]);
@@ -29,29 +30,26 @@ export default function DrinkCategories() {
   const categoriesLength = 5;
 
   return (
-    <>
-      {
-        categories.length > 0 && categories
-          .slice(0, categoriesLength).map(({ strCategory }, index) => (
-            <button
-              type="button"
-              value={ strCategory }
-              key={ index }
-              onClick={ handleClick }
-              data-testid={ `${strCategory}-category-filter` }
-            >
-              { strCategory }
-            </button>
-          ))
-      }
+    <section className="drink-categories">
+      {categories.length > 0
+        && categories.slice(0, categoriesLength).map(({ strCategory }, index) => (
+          <button
+            type="button"
+            value={ strCategory }
+            key={ index }
+            onClick={ handleClick }
+            data-testid={ `${strCategory}-category-filter` }
+          >
+            {strCategory}
+          </button>
+        ))}
       <button
         type="button"
         onClick={ () => setDrinksRecipes(defaultDrinkRecipes) }
         data-testid="All-category-filter"
       >
         All
-
       </button>
-    </>
+    </section>
   );
 }

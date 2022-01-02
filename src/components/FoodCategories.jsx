@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import RecipesContext from '../contexts/RecipesContext';
 import fetchByCategory from '../services/fetchByCategory';
+import '../styles/FoodDrinkCategories.css';
 
 export default function FoodCategories() {
   const [categories, setCategories] = useState([]);
@@ -29,7 +30,7 @@ export default function FoodCategories() {
   const categoriesLength = 5;
 
   return (
-    <>
+    <section className="food-categories">
       {
         categories.slice(0, categoriesLength).map(({ strCategory }, index) => (
           <button
@@ -51,6 +52,6 @@ export default function FoodCategories() {
         All
 
       </button>
-    </>
+    </section>
   );
 }
