@@ -14,6 +14,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import ExploreDrinkIngredients from './pages/ExploreDrinkIngredients';
 import ExploreFoodIngredients from './pages/ExploreFoodIngredients';
 import ExploreByArea from './pages/ExploreByArea';
+import NotFound from './pages/NotFound';
 
 function App() {
   return (
@@ -44,6 +45,7 @@ function App() {
             path="/explorar/comidas/ingredientes"
             component={ ExploreFoodIngredients }
           />
+          <Route exact path="*" component={ NotFound } />
         </RecipesProvider>
       </Switch>
     </BrowserRouter>
