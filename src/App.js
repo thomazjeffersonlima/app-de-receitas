@@ -19,8 +19,8 @@ import NotFound from './pages/NotFound';
 function App() {
   return (
     <BrowserRouter>
-      <Switch>
-        <RecipesProvider>
+      <RecipesProvider>
+        <Switch>
           <Route exact path="/" component={ Login } />
           <Route exact path="/comidas" component={ Foods } />
           <Route exact path="/bebidas" component={ Drinks } />
@@ -46,8 +46,8 @@ function App() {
             component={ ExploreFoodIngredients }
           />
           <Route exact path="*" component={ NotFound } />
-        </RecipesProvider>
-      </Switch>
+        </Switch>
+      </RecipesProvider>
     </BrowserRouter>
   );
 }

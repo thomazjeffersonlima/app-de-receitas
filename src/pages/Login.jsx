@@ -1,11 +1,13 @@
-import PropTypes from 'prop-types';
 import React, { useContext, useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import RecipesContext from '../contexts/RecipesContext';
 import deconstructedFoodSvg from '../images/Deconstructed-food.svg';
 import waveSvg from '../images/wave.png';
 import '../styles/Login.css';
 
-export default function Login({ history }) {
+export default function Login() {
+  const history = useHistory();
+
   const {
     isValidEmail,
     setValidEmail,
@@ -38,7 +40,7 @@ export default function Login({ history }) {
   const handleSubmit = () => {
     localStorage.setItem('mealsToken', '1');
     localStorage.setItem('cocktailsToken', '1');
-    localStorage.setItem('user', JSON.stringify({ email: emailValue }));
+    localStorage.setItem('user', JSON.stringify({ email: emailValue || '' }));
 
     history.push('/comidas');
   };
@@ -47,9 +49,11 @@ export default function Login({ history }) {
     <>
       <img src={ waveSvg } alt="wave" className="login-wave" />
       <div className="meals">
-        <object className="login-img" type="image/svg+xml" data={ deconstructedFoodSvg }>
-          Glass
-        </object>
+        <img
+          src={ deconstructedFoodSvg }
+          alt="deconstructed food"
+          className="login-img"
+        />
         <form className="login-form">
           <label htmlFor="email-input">
             Email
@@ -83,9 +87,3 @@ export default function Login({ history }) {
     </>
   );
 }
-
-Login.propTypes = {
-  history: PropTypes.shape({
-    push: PropTypes.func,
-  }).isRequired,
-};

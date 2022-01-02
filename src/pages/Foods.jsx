@@ -4,13 +4,14 @@ import Header from '../components/Header';
 import RecipesContext from '../contexts/RecipesContext';
 import Footer from '../components/Footer';
 import fetchRecipes from '../services/fetchApi';
-import '../styles/RecipesCards.css';
 import FoodCategories from '../components/FoodCategories';
+import '../styles/RecipesCards.css';
 
 export default function Foods() {
   const { foodsRecipes, setFoodsRecipes,
     setDefaultFoodRecipes } = useContext(RecipesContext);
-  const maxLength = 12;
+
+  const MAX_RECIPES = 12;
 
   useEffect(() => {
     async function responseApi() {
@@ -24,7 +25,7 @@ export default function Foods() {
       }
     }
     responseApi();
-  }, [foodsRecipes.length, setDefaultFoodRecipes, setFoodsRecipes]);
+  }, [setDefaultFoodRecipes, setFoodsRecipes]);
 
   const DESCRIPTION_LENGTH = 80;
 
@@ -34,7 +35,7 @@ export default function Foods() {
       <FoodCategories />
       <div className="recipes-cards">
         {foodsRecipes && foodsRecipes
-          .slice(0, maxLength)
+          .slice(0, MAX_RECIPES)
           .map(({ strMealThumb, strMeal, idMeal, strInstructions }, index) => (
             <Link key={ index } to={ `/comidas/${idMeal}` }>
               <div

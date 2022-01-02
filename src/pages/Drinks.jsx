@@ -24,7 +24,7 @@ export default function Drinks() {
       }
     }
     responseApi();
-  }, [drinksRecipes.length, setDefaultDrinkRecipes, setDrinksRecipes]);
+  }, [setDefaultDrinkRecipes, setDrinksRecipes]);
 
   const DESCRIPTION_LENGTH = 80;
 
