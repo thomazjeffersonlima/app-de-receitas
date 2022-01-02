@@ -18,7 +18,7 @@ export default function ExploreFoods() {
   return (
     <>
       <Header title="Explorar Comidas" searchHidden />
-      <div>
+      <div className="explore-btn-container">
         <Link
           to="/explorar/comidas/ingredientes"
         >
@@ -26,7 +26,7 @@ export default function ExploreFoods() {
             Por Ingredientes
           </button>
         </Link>
-        <Link to="/explorar/comidas/area ">
+        <Link to="/explorar/comidas/area">
           <button type="button" data-testid="explore-by-area">
             Por Local de Origem
           </button>

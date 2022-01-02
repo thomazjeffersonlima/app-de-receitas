@@ -31,13 +31,13 @@ function App() {
           <Route exact path="/explorar/bebidas" component={ ExploreDrinks } />
           <Route
             exact
-            path="/explorar/comidas/area"
-            component={ ExploreByArea }
+            path="/explorar/bebidas/ingredientes"
+            component={ ExploreDrinkIngredients }
           />
           <Route
             exact
-            path="/explorar/bebidas/ingredientes"
-            component={ ExploreDrinkIngredients }
+            path="/explorar/comidas/area"
+            component={ ExploreByArea }
           />
           <Route
             exact

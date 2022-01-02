@@ -4,8 +4,8 @@ import Header from '../components/Header';
 import RecipesContext from '../contexts/RecipesContext';
 import Footer from '../components/Footer';
 import fetchRecipes from '../services/fetchApi';
-import '../styles/RecipesCards.css';
 import DrinkCategories from '../components/DrinkCategories';
+import '../styles/RecipesCards.css';
 
 export default function Drinks() {
   const { drinksRecipes, setDrinksRecipes,

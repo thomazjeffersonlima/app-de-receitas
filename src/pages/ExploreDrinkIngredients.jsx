@@ -4,8 +4,8 @@ import Footer from '../components/Footer';
 import Header from '../components/Header';
 import { fetchDrinksIngredients } from '../services/fetchIngredients';
 import fetchRecipes from '../services/fetchApi';
-import '../styles/Ingredients.css';
 import RecipesContext from '../contexts/RecipesContext';
+import '../styles/Ingredients.css';
 
 export default function ExploreDrinkIngredients() {
   const history = useHistory();

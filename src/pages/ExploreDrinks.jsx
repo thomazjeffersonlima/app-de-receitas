@@ -18,7 +18,7 @@ export default function ExploreDrinks() {
   return (
     <>
       <Header title="Explorar Bebidas" searchHidden />
-      <div>
+      <div className="explore-btn-container">
         <Link
           to="/explorar/bebidas/ingredientes"
         >
