@@ -19,7 +19,7 @@ export default function ExploreDrinkIngredients() {
 
   return (
     <>
-      <Header title="Explorar Ingredients" searchHidden />
+      <Header title="Explorar Ingredientes" searchHidden />
       <div className="ingredients-container">
         {drinksIngredients
           .slice(0, MAX_INGREDIENTS)

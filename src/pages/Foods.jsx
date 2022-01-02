@@ -48,7 +48,9 @@ export default function Foods() {
                   {strMeal}
                 </p>
                 <p className="recipe-description">
-                  {`${strInstructions.slice(0, DESCRIPTION_LENGTH)}...`}
+                  {strInstructions
+                    ? `${strInstructions.slice(0, DESCRIPTION_LENGTH)}...`
+                    : ''}
                 </p>
               </div>
             </Link>

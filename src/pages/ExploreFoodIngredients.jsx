@@ -35,7 +35,7 @@ export default function ExploreByFoodIngredients() {
 
   return (
     <>
-      <Header title="Explorar Ingredients" searchHidden />
+      <Header title="Explorar Ingredientes" searchHidden />
       <div className="ingredients-container">
         {foodsIngredients
           .slice(0, MAX_INGREDIENTS)
