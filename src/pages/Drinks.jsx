@@ -26,8 +26,6 @@ export default function Drinks() {
     responseApi();
   }, [setDefaultDrinkRecipes, setDrinksRecipes]);
 
-  const DESCRIPTION_LENGTH = 80;
-
   return (
     <>
       <Header title="Bebidas" />
@@ -35,7 +33,7 @@ export default function Drinks() {
       <div className="recipes-cards">
         {drinksRecipes && drinksRecipes
           .slice(0, maxLength)
-          .map(({ strDrinkThumb, strDrink, idDrink, strInstructions }, index) => (
+          .map(({ strDrinkThumb, strDrink, idDrink }, index) => (
             <Link key={ index } to={ `/bebidas/${idDrink}` }>
               <div
                 data-testid={ `${index}-recipe-card` }
@@ -48,11 +46,6 @@ export default function Drinks() {
                 />
                 <p data-testid={ `${index}-card-name` } className="recipe-name">
                   {strDrink}
-                </p>
-                <p className="recipe-description">
-                  {strInstructions
-                    ? `${strInstructions.slice(0, DESCRIPTION_LENGTH)}...`
-                    : ''}
                 </p>
               </div>
             </Link>
