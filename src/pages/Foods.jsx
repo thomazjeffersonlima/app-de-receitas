@@ -19,10 +19,12 @@ export default function Foods() {
         'search.php?s=',
       );
       setDefaultFoodRecipes(returnDefaultFoods);
-      setFoodsRecipes(returnDefaultFoods);
+      if (foodsRecipes.length === 0) {
+        setFoodsRecipes(returnDefaultFoods);
+      }
     }
     responseApi();
-  }, [setDefaultFoodRecipes, setFoodsRecipes]);
+  }, [foodsRecipes.length, setDefaultFoodRecipes, setFoodsRecipes]);
 
   const DESCRIPTION_LENGTH = 80;
 

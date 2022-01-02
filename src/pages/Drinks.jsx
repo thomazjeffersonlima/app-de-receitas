@@ -19,10 +19,12 @@ export default function Drinks() {
         'search.php?s=',
       );
       setDefaultDrinkRecipes(returnDefaultDrinks);
-      setDrinksRecipes(returnDefaultDrinks);
+      if (drinksRecipes.length === 0) {
+        setDrinksRecipes(returnDefaultDrinks);
+      }
     }
     responseApi();
-  }, [setDefaultDrinkRecipes, setDrinksRecipes]);
+  }, [drinksRecipes.length, setDefaultDrinkRecipes, setDrinksRecipes]);
 
   const DESCRIPTION_LENGTH = 80;
 
