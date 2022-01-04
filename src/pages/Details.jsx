@@ -18,6 +18,7 @@ export default function Details() {
         setRecipeType('comida');
         const { meals } = await fetchRecipeById('comida', id);
         setRecipe(meals[0]);
+        console.log(meals[0]);
       } else {
         setRecipeType('bebida');
         const { drinks } = await fetchRecipeById('bebida', id);
@@ -27,29 +28,62 @@ export default function Details() {
     getRecipe();
   }, [id, pathname]);
 
+  const ingredients = Object.entries(recipe)
+    .filter((entrie) => entrie[0].includes('strIngredient') && entrie[1])
+    .map((element) => element[1]);
+  const measure = Object.entries(recipe)
+    .filter(
+      (entrie) => entrie[0].includes('strMeasure') && entrie[1],
+    )
+    .map((element) => element[1]);
+
   return (
-    <section>
-      <img src="" alt="" data-testid="recipe-photo" />
-      <h2 data-testid="recipe-title" />
-      <input
-        type="image"
-        src={ shareIcon }
-        alt="share icon"
-        data-testid="share-btn"
-      />
-      <input
-        type="image"
-        src={ whiteHeart }
-        alt="favorite icon"
-        data-testid="favorite-btn"
-      />
-      <p data-testid="recipe-category" />
-      <div>
-        <p>Ingredientes</p>
-      </div>
-      <p data-testid="instructions" />
-      <ReactPlayer url="https://www.youtube.com/watch?v=ysz5S6PUM-U" controls data-testid="video" />
-      <button data-testid="start-recipe-btn">Inicar Receita</button>
-    </section>
+    Object.keys(recipe).length > 0 && (
+      <section>
+        <img
+          src={
+            recipeType === 'comida' ? recipe.strMealThumb : recipe.strDrinkThumb
+          }
+          alt="recipe thumb"
+          data-testid="recipe-photo"
+        />
+        <h2 data-testid="recipe-title">
+          {recipeType === 'comida' ? recipe.strMeal : recipe.strDrink}
+        </h2>
+        <p data-testid="recipe-category">{recipe.strCategory}</p>
+        <input
+          type="image"
+          src={ shareIcon }
+          alt="share icon"
+          data-testid="share-btn"
+        />
+        <input
+          type="image"
+          src={ whiteHeart }
+          alt="favorite icon"
+          data-testid="favorite-btn"
+        />
+        <div>
+          <p>Ingredientes</p>
+          <ul>
+            {ingredients.map((ingredient, index) => (
+              <li
+                key={ ingredient }
+                data-testid={ `${index}-ingredient-name-and-measure` }
+              >
+                {`${ingredient} - ${measure[index]}`}
+              </li>
+            ))}
+          </ul>
+        </div>
+        <p data-testid="instructions">{recipe.strIntructions}</p>
+        {recipeType === 'comida' && (
+          <ReactPlayer url={ recipe.strYoutube } controls data-testid="video" />
+        )}
+        <button type="button" data-testid="start-recipe-btn">
+          Inicar Receita
+        </button>
+      </section>
+    )
   );
 }
