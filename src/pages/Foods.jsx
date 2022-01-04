@@ -25,7 +25,7 @@ export default function Foods() {
       }
     }
     responseApi();
-  }, [foodsRecipes.length, setDefaultFoodRecipes, setFoodsRecipes]);
+  }, [setDefaultFoodRecipes, setFoodsRecipes]);
 
   return (
     <>
