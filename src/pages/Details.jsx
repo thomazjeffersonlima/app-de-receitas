@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
 import ReactPlayer from 'react-player/youtube';
 import { Link, useLocation } from 'react-router-dom';
@@ -9,7 +10,7 @@ import FoodRecipeCard from '../components/FoodRecipeCard';
 import DrinksRecipesCards from '../components/DrinksRecipesCards';
 import '../styles/Details.css';
 
-export default function Details() {
+export default function Details({ inProgress }) {
   const { pathname } = useLocation();
   const id = pathname.replace(/\D/g, '');
 
@@ -113,16 +114,26 @@ export default function Details() {
               />
             ))}
         </div>
-        <Link to={ `${pathname}/in-progress` }>
-          <button
-            type="button"
-            data-testid="start-recipe-btn"
-            className="details-begin-recipe"
-          >
-            Inicar Receita
-          </button>
-        </Link>
+        {!inProgress && (
+          <Link to={ `${pathname}/in-progress` }>
+            <button
+              type="button"
+              data-testid="start-recipe-btn"
+              className="details-begin-recipe"
+            >
+              Inicar Receita
+            </button>
+          </Link>
+        )}
       </section>
     )
   );
 }
+
+Details.propTypes = {
+  inProgress: PropTypes.bool,
+};
+
+Details.defaultProps = {
+  inProgress: false,
+};

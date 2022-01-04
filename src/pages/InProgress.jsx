@@ -1,5 +1,10 @@
 import React from 'react';
+import Details from './Details';
 
 export default function InProgress() {
-  return <div>In-Progress</div>;
+  return (
+    <div>
+      <Details inProgress />
+    </div>
+  );
 }
