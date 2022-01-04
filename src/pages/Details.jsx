@@ -85,7 +85,7 @@ export default function Details({ inProgress }) {
             {ingredients.map((ingredient, index) => (
               <li
                 key={ ingredient }
-                data-testid={ `${index}-ingredient-name-and-measure` }
+                data-testid={ inProgress ? `${index}-ingredient-step` : `${index}-ingredient-name-and-measure` }
               >
                 {`${ingredient} - ${measure[index]}`}
               </li>
@@ -93,28 +93,42 @@ export default function Details({ inProgress }) {
           </ul>
         </div>
         <p data-testid="instructions">{recipe.strInstructions}</p>
-        {recipeType === 'comida' && (
-          <ReactPlayer url={ recipe.strYoutube } controls data-testid="video" />
-        )}
-        <div className="recommentadions-wrapper">
-          {recommendations.length > 0
-            && (recipeType === 'comida' ? (
-              <DrinksRecipesCards
-                recipes={ recommendations }
-                maxRecipes={ 6 }
-                testId="recomendation-card"
-                titleTestId="recomendation-title"
-              />
-            ) : (
-              <FoodRecipeCard
-                recipes={ recommendations }
-                maxRecipes={ 6 }
-                testId="recomendation-card"
-                titleTestId="recomendation-title"
-              />
-            ))}
-        </div>
         {!inProgress && (
+          recipeType === 'comida' && (
+            <ReactPlayer url={ recipe.strYoutube } controls data-testid="video" />
+          )
+        )}
+        {!inProgress && (
+          <div className="recommentadions-wrapper">
+            {recommendations.length > 0
+              && (recipeType === 'comida' ? (
+                <DrinksRecipesCards
+                  recipes={ recommendations }
+                  maxRecipes={ 6 }
+                  testId="recomendation-card"
+                  titleTestId="recomendation-title"
+                />
+              ) : (
+                <FoodRecipeCard
+                  recipes={ recommendations }
+                  maxRecipes={ 6 }
+                  testId="recomendation-card"
+                  titleTestId="recomendation-title"
+                />
+              ))}
+          </div>
+        )}
+        {inProgress ? (
+          <Link to={ `${pathname}/receitas-feitas` }>
+            <button
+              type="button"
+              data-testid="finish-recipe-btn"
+              className="details-begin-recipe"
+            >
+              Finalizar receita
+            </button>
+          </Link>
+        ) : (
           <Link to={ `${pathname}/in-progress` }>
             <button
               type="button"
