@@ -1,9 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import ReactPlayer from 'react-player/youtube';
-import { useLocation } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import shareIcon from '../images/shareIcon.svg';
 import whiteHeart from '../images/whiteHeartIcon.svg';
 import fetchRecipeById from '../services/fetchRecipeById';
+import fetchRecipes from '../services/fetchApi';
+import FoodRecipeCard from '../components/FoodRecipeCard';
+import DrinksRecipesCards from '../components/DrinksRecipesCards';
+import '../styles/Details.css';
 
 export default function Details() {
   const { pathname } = useLocation();
@@ -11,17 +15,28 @@ export default function Details() {
 
   const [recipe, setRecipe] = useState({});
   const [recipeType, setRecipeType] = useState('');
+  const [recommendations, setRecommendations] = useState([]);
 
   useEffect(() => {
     async function getRecipe() {
       if (pathname.includes('comidas')) {
+        const getDrinksRecomendations = await fetchRecipes(
+          'Bebidas',
+          'search.php?s=',
+        );
+        setRecommendations(getDrinksRecomendations);
         setRecipeType('comida');
         const { meals } = await fetchRecipeById('comida', id);
         setRecipe(meals[0]);
-        console.log(meals[0]);
       } else {
+        const getFoodRecomendations = await fetchRecipes(
+          'Comidas',
+          'search.php?s=',
+        );
+        setRecommendations(getFoodRecomendations);
         setRecipeType('bebida');
         const { drinks } = await fetchRecipeById('bebida', id);
+        console.log(drinks[0]);
         setRecipe(drinks[0]);
       }
     }
@@ -32,9 +47,7 @@ export default function Details() {
     .filter((entrie) => entrie[0].includes('strIngredient') && entrie[1])
     .map((element) => element[1]);
   const measure = Object.entries(recipe)
-    .filter(
-      (entrie) => entrie[0].includes('strMeasure') && entrie[1],
-    )
+    .filter((entrie) => entrie[0].includes('strMeasure') && entrie[1])
     .map((element) => element[1]);
 
   return (
@@ -50,7 +63,9 @@ export default function Details() {
         <h2 data-testid="recipe-title">
           {recipeType === 'comida' ? recipe.strMeal : recipe.strDrink}
         </h2>
-        <p data-testid="recipe-category">{recipe.strCategory}</p>
+        <p data-testid="recipe-category">
+          {recipeType === 'comida' ? recipe.strCategory : recipe.strAlcoholic}
+        </p>
         <input
           type="image"
           src={ shareIcon }
@@ -76,13 +91,37 @@ export default function Details() {
             ))}
           </ul>
         </div>
-        <p data-testid="instructions">{recipe.strIntructions}</p>
+        <p data-testid="instructions">{recipe.strInstructions}</p>
         {recipeType === 'comida' && (
           <ReactPlayer url={ recipe.strYoutube } controls data-testid="video" />
         )}
-        <button type="button" data-testid="start-recipe-btn">
-          Inicar Receita
-        </button>
+        <div className="recommentadions-wrapper">
+          {recommendations.length > 0
+            && (recipeType === 'comida' ? (
+              <DrinksRecipesCards
+                recipes={ recommendations }
+                maxRecipes={ 6 }
+                testId="recomendation-card"
+                titleTestId="recomendation-title"
+              />
+            ) : (
+              <FoodRecipeCard
+                recipes={ recommendations }
+                maxRecipes={ 6 }
+                testId="recomendation-card"
+                titleTestId="recomendation-title"
+              />
+            ))}
+        </div>
+        <Link to={ `${pathname}/in-progress` }>
+          <button
+            type="button"
+            data-testid="start-recipe-btn"
+            className="details-begin-recipe"
+          >
+            Inicar Receita
+          </button>
+        </Link>
       </section>
     )
   );

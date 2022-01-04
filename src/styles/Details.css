@@ -1,0 +1,20 @@
+.recommentadions-wrapper {
+  align-items: center;
+  display: flex;
+  justify-content: flex-start;
+  margin: auto;
+  max-width: 360px;
+  overflow-y: scroll;
+}
+
+.recommentadions-wrapper div {
+  height: 10rem;
+  margin: 0;
+  width: 180px;
+}
+
+.details-begin-recipe {
+  bottom: 0;
+  margin: auto;
+  position: fixed;
+}
