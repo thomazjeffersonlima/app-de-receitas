@@ -5,12 +5,14 @@ import Footer from '../components/Footer';
 
 export default function Profile() {
   const history = useHistory();
-  const [email, setEmail] = React.useState(null);
+  const [userEmail, setEmail] = React.useState('');
 
   React.useEffect(() => {
-    const emailLocal = window.localStorage.getItem('user');
-    const emailObj = JSON.parse(emailLocal);
-    setEmail(emailObj.email);
+    if (localStorage.getItem('user')) {
+      const emailLocal = localStorage.getItem('user');
+      const emailObj = JSON.parse(emailLocal);
+      setEmail(emailObj.email);
+    }
   }, []);
 
   function handleClickFavorite() {
@@ -30,7 +32,7 @@ export default function Profile() {
     <>
       <Header title="Perfil" searchHidden />
       <div>
-        <p data-testid="profile-email">{email}</p>
+        <p data-testid="profile-email">{userEmail}</p>
         <button
           type="button"
           data-testid="profile-done-btn"
