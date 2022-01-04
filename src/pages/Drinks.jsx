@@ -24,7 +24,7 @@ export default function Drinks() {
       }
     }
     responseApi();
-  }, [setDefaultDrinkRecipes, setDrinksRecipes]);
+  }, [drinksRecipes.length, setDefaultDrinkRecipes, setDrinksRecipes]);
 
   return (
     <>
