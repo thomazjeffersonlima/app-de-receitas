@@ -8,13 +8,19 @@ import Explore from './pages/Explore';
 import Profile from './pages/Profile';
 import Details from './pages/Details';
 import RecipesProvider from './providers/RecipesProvider';
+import ExploreFoods from './pages/ExploreFoods';
+import ExploreDrinks from './pages/ExploreDrinks';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import ExploreDrinkIngredients from './pages/ExploreDrinkIngredients';
+import ExploreFoodIngredients from './pages/ExploreFoodIngredients';
+import ExploreByArea from './pages/ExploreByArea';
+import NotFound from './pages/NotFound';
 
 function App() {
   return (
     <BrowserRouter>
-      <Switch>
-        <RecipesProvider>
+      <RecipesProvider>
+        <Switch>
           <Route exact path="/" component={ Login } />
           <Route exact path="/comidas" component={ Foods } />
           <Route exact path="/bebidas" component={ Drinks } />
@@ -22,8 +28,26 @@ function App() {
           <Route exact path="/perfil" component={ Profile } />
           <Route exact path="/comidas/:id" component={ Details } />
           <Route exact path="/bebidas/:id" component={ Details } />
-        </RecipesProvider>
-      </Switch>
+          <Route exact path="/explorar/comidas" component={ ExploreFoods } />
+          <Route exact path="/explorar/bebidas" component={ ExploreDrinks } />
+          <Route
+            exact
+            path="/explorar/bebidas/ingredientes"
+            component={ ExploreDrinkIngredients }
+          />
+          <Route
+            exact
+            path="/explorar/comidas/area"
+            component={ ExploreByArea }
+          />
+          <Route
+            exact
+            path="/explorar/comidas/ingredientes"
+            component={ ExploreFoodIngredients }
+          />
+          <Route exact path="*" component={ NotFound } />
+        </Switch>
+      </RecipesProvider>
     </BrowserRouter>
   );
 }

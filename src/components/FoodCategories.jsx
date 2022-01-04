@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import RecipesContext from '../contexts/RecipesContext';
 import fetchByCategory from '../services/fetchByCategory';
+import '../styles/FoodDrinkCategories.css';
 
 export default function FoodCategories() {
   const [categories, setCategories] = useState([]);
@@ -26,12 +27,13 @@ export default function FoodCategories() {
     }
     setSelectedCategory(value);
   };
-  const categoriesLength = 5;
+  const CATEGORIES_LENGTH = 5;
 
   return (
-    <>
+    <section className="food-categories">
       {
-        categories.slice(0, categoriesLength).map(({ strCategory }, index) => (
+        categories
+        && categories.slice(0, CATEGORIES_LENGTH).map(({ strCategory }, index) => (
           <button
             type="button"
             value={ strCategory }
@@ -51,6 +53,6 @@ export default function FoodCategories() {
         All
 
       </button>
-    </>
+    </section>
   );
 }

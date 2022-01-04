@@ -4,8 +4,8 @@ import Header from '../components/Header';
 import RecipesContext from '../contexts/RecipesContext';
 import Footer from '../components/Footer';
 import fetchRecipes from '../services/fetchApi';
-import '../styles/RecipesCards.css';
 import DrinkCategories from '../components/DrinkCategories';
+import '../styles/RecipesCards.css';
 
 export default function Drinks() {
   const { drinksRecipes, setDrinksRecipes,
@@ -19,7 +19,9 @@ export default function Drinks() {
         'search.php?s=',
       );
       setDefaultDrinkRecipes(returnDefaultDrinks);
-      setDrinksRecipes(returnDefaultDrinks);
+      if (drinksRecipes.length === 0) {
+        setDrinksRecipes(returnDefaultDrinks);
+      }
     }
     responseApi();
   }, [setDefaultDrinkRecipes, setDrinksRecipes]);
@@ -42,7 +44,9 @@ export default function Drinks() {
                   alt=""
                   data-testid={ `${index}-card-img` }
                 />
-                <p data-testid={ `${index}-card-name` }>{strDrink}</p>
+                <p data-testid={ `${index}-card-name` } className="recipe-name">
+                  {strDrink}
+                </p>
               </div>
             </Link>
           ))}

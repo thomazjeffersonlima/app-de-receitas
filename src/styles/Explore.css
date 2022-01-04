@@ -1,0 +1,16 @@
+.explore-btn-container {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.explore-btn-container button {
+  background-color: var(--main-purple);
+  border: none;
+  border-radius: 5px;
+  color: #fefefe;
+  height: 40px;
+  margin: 20px;
+  width: 200px;
+}

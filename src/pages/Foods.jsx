@@ -4,13 +4,14 @@ import Header from '../components/Header';
 import RecipesContext from '../contexts/RecipesContext';
 import Footer from '../components/Footer';
 import fetchRecipes from '../services/fetchApi';
-import '../styles/RecipesCards.css';
 import FoodCategories from '../components/FoodCategories';
+import '../styles/RecipesCards.css';
 
 export default function Foods() {
   const { foodsRecipes, setFoodsRecipes,
     setDefaultFoodRecipes } = useContext(RecipesContext);
-  const maxLength = 12;
+
+  const MAX_RECIPES = 12;
 
   useEffect(() => {
     async function responseApi() {
@@ -19,7 +20,9 @@ export default function Foods() {
         'search.php?s=',
       );
       setDefaultFoodRecipes(returnDefaultFoods);
-      setFoodsRecipes(returnDefaultFoods);
+      if (foodsRecipes.length === 0) {
+        setFoodsRecipes(returnDefaultFoods);
+      }
     }
     responseApi();
   }, [setDefaultFoodRecipes, setFoodsRecipes]);
@@ -30,7 +33,7 @@ export default function Foods() {
       <FoodCategories />
       <div className="recipes-cards">
         {foodsRecipes && foodsRecipes
-          .slice(0, maxLength)
+          .slice(0, MAX_RECIPES)
           .map(({ strMealThumb, strMeal, idMeal }, index) => (
             <Link key={ index } to={ `/comidas/${idMeal}` }>
               <div
@@ -42,7 +45,9 @@ export default function Foods() {
                   alt=""
                   data-testid={ `${index}-card-img` }
                 />
-                <p data-testid={ `${index}-card-name` }>{strMeal}</p>
+                <p data-testid={ `${index}-card-name` } className="recipe-name">
+                  {strMeal}
+                </p>
               </div>
             </Link>
           ))}

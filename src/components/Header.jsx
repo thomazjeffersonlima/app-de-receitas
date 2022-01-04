@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import RecipesContext from '../contexts/RecipesContext';
 import profileIcon from '../images/profileIcon.svg';
@@ -7,7 +7,7 @@ import searchIcon from '../images/searchIcon.svg';
 import fetchRecipes from '../services/fetchApi';
 import '../styles/Header.css';
 
-export default function Header({ title }) {
+export default function Header({ title, searchHidden }) {
   const history = useHistory();
   const {
     foodsRecipes,
@@ -21,14 +21,21 @@ export default function Header({ title }) {
   const [radioFilter, setRadioFilter] = useState('');
   const [searchValue, setSearchValue] = useState('');
 
-  const redirectPath = () => {
-    if (foodsRecipes.length === 1) {
+  useEffect(() => {
+    const CATEGORY_LENGTH = 3;
+    if (
+      (foodsRecipes && foodsRecipes.length === 1)
+      && Object.keys(foodsRecipes[0]).length > CATEGORY_LENGTH
+    ) {
       history.push(`/comidas/${foodsRecipes[0].idMeal}`);
     }
-    if (drinksRecipes.length === 1) {
+    if (
+      (drinksRecipes && drinksRecipes.length === 1)
+      && Object.keys(drinksRecipes[0]).length > CATEGORY_LENGTH
+    ) {
       history.push(`/bebidas/${drinksRecipes[0].idDrink}`);
     }
-  };
+  }, [drinksRecipes, foodsRecipes, history]);
 
   const handleFilter = ({ target: { value, id } }) => {
     setRadioFilter(id);
@@ -49,15 +56,15 @@ export default function Header({ title }) {
     } else {
       const apiReturn = await fetchRecipes(title, `${filter}=${searchValue}`);
       if (!apiReturn || apiReturn === null) {
-        return global
-          .alert('Sinto muito, não encontramos nenhuma receita para esses filtros.');
+        return global.alert(
+          'Sinto muito, não encontramos nenhuma receita para esses filtros.',
+        );
       }
       if (title === 'Comidas') {
         setFoodsRecipes(apiReturn);
       } else {
         setDrinksRecipes(apiReturn);
       }
-      redirectPath();
     }
   };
 
@@ -73,13 +80,15 @@ export default function Header({ title }) {
           />
         </Link>
         <h1 data-testid="page-title">{title}</h1>
-        <input
-          type="image"
-          src={ searchIcon }
-          alt="search icon"
-          data-testid="search-top-btn"
-          onClick={ () => setShowSearchBar(!showSearchBar) }
-        />
+        {!searchHidden && (
+          <input
+            type="image"
+            src={ searchIcon }
+            alt="search icon"
+            data-testid="search-top-btn"
+            onClick={ () => setShowSearchBar(!showSearchBar) }
+          />
+        )}
       </div>
       {showSearchBar && (
         <div className="header-filter">
@@ -139,4 +148,9 @@ export default function Header({ title }) {
 
 Header.propTypes = {
   title: PropTypes.string.isRequired,
+  searchHidden: PropTypes.bool,
+};
+
+Header.defaultProps = {
+  searchHidden: false,
 };
