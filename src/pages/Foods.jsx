@@ -35,7 +35,7 @@ export default function Foods() {
         {foodsRecipes && (
           <FoodRecipeCard
             recipes={ foodsRecipes }
-            maxLength={ MAX_RECIPES }
+            maxRecipes={ MAX_RECIPES }
             testId="recipe-card"
             titleTestId="card-name"
           />
