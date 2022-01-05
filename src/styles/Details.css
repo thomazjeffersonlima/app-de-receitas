@@ -8,8 +8,9 @@
 .recommentadions-wrapper {
   align-items: center;
   display: flex;
+  height: 20rem;
   justify-content: flex-start;
-  margin: auto;
+  margin: 0 auto 40px;
   max-width: 360px;
   overflow-y: scroll;
 }
@@ -25,8 +26,8 @@
 
 .recommentadions-wrapper div {
   height: 10rem;
-  margin: 0;
-  width: 180px;
+  margin: 10px;
+  width: 160px;
 }
 
 .details-begin-recipe {
