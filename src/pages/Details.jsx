@@ -81,27 +81,32 @@ export default function Details({ inProgress }) {
         />
         <div>
           <p>Ingredientes</p>
-          <ul>
-            {ingredients.map((ingredient, index) => inProgress ? (
-              <label>
+          { inProgress ? ingredients.map((ingredient) => (
+            <div key={ ingredient }>
+              <label
+                htmlFor={ ingredient }
+                data-testid="ingredient-step"
+              >
                 <input
                   type="checkbox"
-                  key={ ingredient }
-                  data-testid={ `${index}-ingredient-step` }
                   id={ ingredient }
                   value={ ingredient }
-                /> 
+                />
                 { ingredient }
               </label>
-            ) : (
-              <li
-                key={ ingredient }
-                data-testid={ `${index}-ingredient-name-and-measure` }
-              >
-                {`${ingredient} - ${measure[index]}`}
-              </li>
-            ))}
-          </ul>
+            </div>
+          )) : (
+            <ul>
+              { ingredients.map((ingredient, index) => (
+                <li
+                  key={ ingredient }
+                  data-testid={ `${index}-ingredient-name-and-measure` }
+                >
+                  {`${ingredient} - ${measure[index]}`}
+                </li>
+              ))}
+            </ul>
+          )}
         </div>
         <p data-testid="instructions">{recipe.strInstructions}</p>
         {!inProgress && (
