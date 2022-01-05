@@ -9,6 +9,7 @@ import fetchRecipes from '../services/fetchApi';
 import FoodRecipeCard from '../components/FoodRecipeCard';
 import DrinksRecipesCards from '../components/DrinksRecipesCards';
 import '../styles/Details.css';
+import IngredientsProgress from '../components/IngredientsProgress';
 
 export default function Details({ inProgress }) {
   const { pathname } = useLocation();
@@ -81,21 +82,7 @@ export default function Details({ inProgress }) {
         />
         <div>
           <p>Ingredientes</p>
-          { inProgress ? ingredients.map((ingredient) => (
-            <div key={ ingredient }>
-              <label
-                htmlFor={ ingredient }
-                data-testid="ingredient-step"
-              >
-                <input
-                  type="checkbox"
-                  id={ ingredient }
-                  value={ ingredient }
-                />
-                { ingredient }
-              </label>
-            </div>
-          )) : (
+          { inProgress ? (<IngredientsProgress ingredients={ ingredients } />) : (
             <ul>
               { ingredients.map((ingredient, index) => (
                 <li
