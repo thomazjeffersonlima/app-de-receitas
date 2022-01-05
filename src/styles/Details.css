@@ -18,3 +18,7 @@
   margin: auto;
   position: fixed;
 }
+
+.ingredient-checked {
+  text-decoration: line-through;
+}

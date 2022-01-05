@@ -82,7 +82,11 @@ export default function Details({ inProgress }) {
         />
         <div>
           <p>Ingredientes</p>
-          { inProgress ? (<IngredientsProgress ingredients={ ingredients } />) : (
+          { inProgress ? (<IngredientsProgress
+            ingredients={ ingredients }
+            id={ id }
+            recipeType={ recipeType }
+          />) : (
             <ul>
               { ingredients.map((ingredient, index) => (
                 <li
