@@ -18,3 +18,60 @@
   margin: auto;
   position: fixed;
 }
+
+.copied-message {
+  align-items: center;
+  background-color: transparent;
+  border: 2px solid var(--main-green);
+  border-radius: 5px;
+  color: #212121;
+  display: flex;
+  font-weight: 700;
+  height: 50px;
+  justify-content: center;
+  left: 0;
+  margin-left: auto;
+  margin-right: auto;
+  position: fixed;
+  right: 0;
+  top: 10px;
+  width: 180px;
+}
+
+.copied-message p {
+  margin: 0;
+}
+
+.link-show {
+  animation: show 1s ease-in-out forwards;
+}
+
+@keyframes show {
+
+  from {
+    opacity: 0;
+    top: -50px;
+  }
+
+  to {
+    opacity: 1;
+    top: 10px;
+  }
+}
+
+.link-hide {
+  animation: hide 1s ease-in-out forwards;
+}
+
+@keyframes hide {
+
+  from {
+    opacity: 1;
+    top: 10px;
+  }
+
+  to {
+    opacity: 0;
+    top: -50px;
+  }
+}
