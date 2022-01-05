@@ -53,18 +53,18 @@ export default function Details({ inProgress }) {
     .map((element) => element[1]);
 
   const handleShare = () => {
-    copy(window.location.href);
     const COPIED_MESSAGE = 4000;
 
     setIsCopied(true);
     setInterval(() => {
       setIsCopied(false);
     }, COPIED_MESSAGE);
+    copy(window.location.href);
   };
 
   return (
     Object.keys(recipe).length > 0 && (
-      <section>
+      <section className="details-wrapper">
         {isCopied && (
           <div className="copied-message">
             <p>Link copiado!</p>
@@ -76,6 +76,7 @@ export default function Details({ inProgress }) {
           }
           alt="recipe thumb"
           data-testid="recipe-photo"
+          className="details-img"
         />
         <h2 data-testid="recipe-title">
           {recipeType === 'comida' ? recipe.strMeal : recipe.strDrink}
@@ -111,7 +112,12 @@ export default function Details({ inProgress }) {
         </div>
         <p data-testid="instructions">{recipe.strInstructions}</p>
         {recipeType === 'comida' && (
-          <ReactPlayer url={ recipe.strYoutube } controls data-testid="video" />
+          <ReactPlayer
+            url={ recipe.strYoutube }
+            controls
+            data-testid="video"
+            className="details-video"
+          />
         )}
         <div className="recommentadions-wrapper">
           {recommendations.length > 0

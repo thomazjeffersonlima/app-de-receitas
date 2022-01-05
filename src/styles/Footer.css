@@ -11,6 +11,32 @@
   width: 100vw;
 }
 
-.footer-wrapper input {
+.footer-wrapper a {
+  align-items: center;
+  display: flex;
+  height: 70px;
+  justify-content: center;
+  position: relative;
+  text-align: center;
+  transition: 500ms;
+  width: 70px;
+}
+
+.footer-wrapper a input {
   filter: brightness(0) invert(1);
+  transition: 500ms;
+}
+
+.footer-wrapper .selected {
+  background-color: #29fd53;
+  border: 3px solid #fefefe;
+  border-radius: 50%;
+  transform: translateY(-26px);
+}
+
+@media only screen and ( max-width : 375px ) {
+
+  .footer-wrapper input {
+    width: 30px;
+  }
 }
