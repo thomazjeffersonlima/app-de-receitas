@@ -126,11 +126,12 @@ export default function Details({ inProgress }) {
           </div>
         )}
         {inProgress ? (
-          <Link to={ `${pathname}/receitas-feitas` }>
+          <Link to="/receitas-feitas">
             <button
               type="button"
               data-testid="finish-recipe-btn"
               className="details-begin-recipe"
+              // disabled={ isRecipeInompleted() }
             >
               Finalizar receita
             </button>
