@@ -1,18 +1,20 @@
 import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useHistory } from 'react-router-dom';
 import copy from 'clipboard-copy';
 import shareIcon from '../images/shareIcon.svg';
 import whiteHeart from '../images/whiteHeartIcon.svg';
 import fetchRecipeById from '../services/fetchRecipeById';
 import fetchRecipes from '../services/fetchApi';
-import IngredientsProgress from '../components/IngredientsProgress';
 import DetailsMainInfo from '../components/DetailsMainInfo';
-import '../styles/Details.css';
 import DetailsVideo from '../components/DetailsVideo';
 import Recommendations from '../components/Recommendations';
+import DetailsIngredients from '../components/DetailsIngredients';
+import handleCompleteRecipe from '../services/doneRecipes';
+import '../styles/Details.css';
 
 export default function Details({ inProgress }) {
+  const history = useHistory();
   const { pathname } = useLocation();
   const id = pathname.replace(/\D/g, '');
 
@@ -64,6 +66,16 @@ export default function Details({ inProgress }) {
     copy(window.location.href);
   };
 
+  const recipeInfo = {
+    id: recipeType === 'comida' ? recipe.idMeal : recipe.idDrink,
+    type: recipeType,
+    area: recipe.strArea || '',
+    category: recipe.strCategory,
+    alcoholicOrNot: recipe.strAlcoholic || '',
+    name: recipeType === 'comida' ? recipe.strMeal : recipe.strDrink,
+    image: recipeType === 'comida' ? recipe.strMealThumb : recipe.strDrinkThumb,
+  };
+
   return (
     Object.keys(recipe).length > 0 && (
       <section className="details-wrapper">
@@ -85,29 +97,15 @@ export default function Details({ inProgress }) {
           alt="favorite icon"
           data-testid="favorite-btn"
         />
-        <div>
-          <p>Ingredientes</p>
-          {inProgress ? (
-            <IngredientsProgress
-              ingredients={ ingredients }
-              id={ id }
-              recipeType={ recipeType }
-              completedIngredients={ completedIngredients }
-              setCompletedIngredients={ setCompletedIngredients }
-            />
-          ) : (
-            <ul>
-              {ingredients.map((ingredient, index) => (
-                <li
-                  key={ ingredient }
-                  data-testid={ `${index}-ingredient-name-and-measure` }
-                >
-                  {`${ingredient} - ${measure[index]}`}
-                </li>
-              ))}
-            </ul>
-          )}
-        </div>
+        <DetailsIngredients
+          inProgress={ inProgress }
+          ingredients={ ingredients }
+          id={ id }
+          recipeType={ recipeType }
+          completedIngredients={ completedIngredients }
+          setCompletedIngredients={ setCompletedIngredients }
+          measure={ measure }
+        />
         <p data-testid="instructions">{recipe.strInstructions}</p>
         <DetailsVideo
           recipe={ recipe }
@@ -120,16 +118,17 @@ export default function Details({ inProgress }) {
           recipeType={ recipeType }
         />
         {inProgress ? (
-          <Link to="/receitas-feitas">
-            <button
-              type="button"
-              data-testid="finish-recipe-btn"
-              className="details-begin-recipe"
-              disabled={ completedIngredients !== ingredients.length }
-            >
-              Finalizar receita
-            </button>
-          </Link>
+          <button
+            type="button"
+            data-testid="finish-recipe-btn"
+            className="details-begin-recipe"
+            disabled={ completedIngredients !== ingredients.length }
+            onClick={ () => {
+              handleCompleteRecipe(recipe, history, recipeInfo);
+            } }
+          >
+            Finalizar receita
+          </button>
         ) : (
           <Link to={ `${pathname}/in-progress` }>
             <button
