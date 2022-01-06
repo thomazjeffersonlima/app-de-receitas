@@ -14,16 +14,25 @@ export default function IngredientsProgress({ ingredients, id, recipeType }) {
     if (inProgressRecipesFromStorage !== null) {
       inProgressRecipes = JSON.parse(inProgressRecipesFromStorage);
     }
+
     if (recipeType === 'comida') {
+      const previousList = inProgressRecipes.meals[id] || [];
       if (checked) {
-        const previousList = inProgressRecipes.meals[id] || [];
         inProgressRecipes.meals[id] = [...previousList, ingredient];
       } else {
-        const previousList = inProgressRecipes.meals[id] || [];
         const filteredList = previousList.filter((item) => item !== ingredient);
         inProgressRecipes.meals[id] = filteredList;
       }
+    } else {
+      const previousList = inProgressRecipes.cocktails[id] || [];
+      if (checked) {
+        inProgressRecipes.cocktails[id] = [...previousList, ingredient];
+      } else {
+        const filteredList = previousList.filter((item) => item !== ingredient);
+        inProgressRecipes.cocktails[id] = filteredList;
+      }
     }
+
     localStorage.setItem('inProgressRecipes', JSON.stringify(inProgressRecipes));
   };
 
@@ -32,17 +41,20 @@ export default function IngredientsProgress({ ingredients, id, recipeType }) {
     if (inProgressRecipesFromStorage === null) {
       return false;
     }
+
     const inProgressRecipes = JSON.parse(inProgressRecipesFromStorage);
     if (recipeType === 'comida') {
       const previousList = inProgressRecipes.meals[id] || [];
       return previousList.includes(ingredient);
     }
+
+    const previousList = inProgressRecipes.cocktails[id] || [];
+    return previousList.includes(ingredient);
     // recupera a informação
     // checar se ta no localStorage (se existe ou é nulo. Se for nulo, significa que não começou ainda a receita e todos os intens são desmarcados)
     // faz um parse
     // pega a lista de ingredientes marcados
     // checar se o ingreditente está na lista ou não
-    return false;
   };
 
   return (
