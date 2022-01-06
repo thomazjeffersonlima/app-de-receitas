@@ -1,16 +1,16 @@
 import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
-import ReactPlayer from 'react-player/youtube';
 import { Link, useLocation } from 'react-router-dom';
 import copy from 'clipboard-copy';
 import shareIcon from '../images/shareIcon.svg';
 import whiteHeart from '../images/whiteHeartIcon.svg';
 import fetchRecipeById from '../services/fetchRecipeById';
 import fetchRecipes from '../services/fetchApi';
-import FoodRecipeCard from '../components/FoodRecipeCard';
-import DrinksRecipesCards from '../components/DrinksRecipesCards';
-import '../styles/Details.css';
 import IngredientsProgress from '../components/IngredientsProgress';
+import DetailsMainInfo from '../components/DetailsMainInfo';
+import '../styles/Details.css';
+import DetailsVideo from '../components/DetailsVideo';
+import Recommendations from '../components/Recommendations';
 
 export default function Details({ inProgress }) {
   const { pathname } = useLocation();
@@ -66,25 +66,11 @@ export default function Details({ inProgress }) {
   return (
     Object.keys(recipe).length > 0 && (
       <section className="details-wrapper">
-        {isCopied && (
-          <div className="copied-message">
-            <p>Link copiado!</p>
-          </div>
-        )}
-        <img
-          src={
-            recipeType === 'comida' ? recipe.strMealThumb : recipe.strDrinkThumb
-          }
-          alt="recipe thumb"
-          data-testid="recipe-photo"
-          className="details-img"
+        <DetailsMainInfo
+          isCopied={ isCopied }
+          recipeType={ recipeType }
+          recipe={ recipe }
         />
-        <h2 data-testid="recipe-title">
-          {recipeType === 'comida' ? recipe.strMeal : recipe.strDrink}
-        </h2>
-        <p data-testid="recipe-category">
-          {recipeType === 'comida' ? recipe.strCategory : recipe.strAlcoholic}
-        </p>
         <input
           type="image"
           src={ shareIcon }
@@ -120,37 +106,16 @@ export default function Details({ inProgress }) {
           )}
         </div>
         <p data-testid="instructions">{recipe.strInstructions}</p>
-        {recipeType === 'comida' && (
-          <ReactPlayer
-            url={ recipe.strYoutube }
-            controls
-            data-testid="video"
-            className="details-video"
-          />
-        )}
-        {!inProgress && recipeType === 'comida' && (
-          <ReactPlayer url={ recipe.strYoutube } controls data-testid="video" />
-        )}
-        {!inProgress && (
-          <div className="recommentadions-wrapper">
-            {recommendations.length > 0
-              && (recipeType === 'comida' ? (
-                <DrinksRecipesCards
-                  recipes={ recommendations }
-                  maxRecipes={ 6 }
-                  testId="recomendation-card"
-                  titleTestId="recomendation-title"
-                />
-              ) : (
-                <FoodRecipeCard
-                  recipes={ recommendations }
-                  maxRecipes={ 6 }
-                  testId="recomendation-card"
-                  titleTestId="recomendation-title"
-                />
-              ))}
-          </div>
-        )}
+        <DetailsVideo
+          recipe={ recipe }
+          inProgress={ inProgress }
+          recipeType={ recipeType }
+        />
+        <Recommendations
+          inProgress={ inProgress }
+          recommendations={ recommendations }
+          recipeType={ recipeType }
+        />
         {inProgress ? (
           <Link to="/receitas-feitas">
             <button
