@@ -27,6 +27,24 @@ export default function IngredientsProgress({ ingredients, id, recipeType }) {
     localStorage.setItem('inProgressRecipes', JSON.stringify(inProgressRecipes));
   };
 
+  const checkIngredient = (ingredient) => {
+    const inProgressRecipesFromStorage = localStorage.getItem('inProgressRecipes');
+    if (inProgressRecipesFromStorage === null) {
+      return false;
+    }
+    const inProgressRecipes = JSON.parse(inProgressRecipesFromStorage);
+    if (recipeType === 'comida') {
+      const previousList = inProgressRecipes.meals[id] || [];
+      return previousList.includes(ingredient);
+    }
+    // recupera a informação
+    // checar se ta no localStorage (se existe ou é nulo. Se for nulo, significa que não começou ainda a receita e todos os intens são desmarcados)
+    // faz um parse
+    // pega a lista de ingredientes marcados
+    // checar se o ingreditente está na lista ou não
+    return false;
+  };
+
   return (
     <div>
       {ingredients.map((ingredient, index) => (
@@ -37,6 +55,7 @@ export default function IngredientsProgress({ ingredients, id, recipeType }) {
             id={ ingredient }
             value={ ingredient }
             onClick={ (event) => handleClick(event.target.checked, ingredient) }
+            defaultChecked={ checkIngredient(ingredient) }
           />
           <label
             htmlFor={ ingredient }
