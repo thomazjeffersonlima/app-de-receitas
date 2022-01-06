@@ -2,9 +2,19 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import '../styles/Details.css';
 
-export default function IngredientsProgress({ ingredients, id, recipeType }) {
+export default function IngredientsProgress({
+  ingredients,
+  id,
+  recipeType,
+  completedIngredients,
+  setCompletedIngredients,
+}) {
   const handleClick = (checked, ingredient) => {
     const inProgressRecipesFromStorage = localStorage.getItem('inProgressRecipes');
+
+    setCompletedIngredients(
+      checked ? completedIngredients + 1 : completedIngredients - 1,
+    );
 
     let inProgressRecipes = {
       cocktails: {},
@@ -33,7 +43,10 @@ export default function IngredientsProgress({ ingredients, id, recipeType }) {
       }
     }
 
-    localStorage.setItem('inProgressRecipes', JSON.stringify(inProgressRecipes));
+    localStorage.setItem(
+      'inProgressRecipes',
+      JSON.stringify(inProgressRecipes),
+    );
   };
 
   const checkIngredient = (ingredient) => {
@@ -69,11 +82,8 @@ export default function IngredientsProgress({ ingredients, id, recipeType }) {
             onClick={ (event) => handleClick(event.target.checked, ingredient) }
             defaultChecked={ checkIngredient(ingredient) }
           />
-          <label
-            htmlFor={ ingredient }
-            className="label-for-check"
-          >
-            { ingredient }
+          <label htmlFor={ ingredient } className="label-for-check">
+            {ingredient}
           </label>
         </div>
       ))}
@@ -85,4 +95,6 @@ IngredientsProgress.propTypes = {
   ingredients: PropTypes.arrayOf(Object).isRequired,
   id: PropTypes.string.isRequired,
   recipeType: PropTypes.string.isRequired,
+  completedIngredients: PropTypes.number.isRequired,
+  setCompletedIngredients: PropTypes.func.isRequired,
 };

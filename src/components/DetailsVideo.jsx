@@ -19,6 +19,12 @@ DetailsVideo.propTypes = {
   inProgress: PropTypes.bool.isRequired,
   recipeType: PropTypes.string.isRequired,
   recipe: PropTypes.shape({
-    strYoutube: PropTypes.string.isRequired,
-  }).isRequired,
+    strYoutube: PropTypes.string,
+  }),
+};
+
+DetailsVideo.defaultProps = {
+  recipe: {
+    strYoutube: '',
+  },
 };

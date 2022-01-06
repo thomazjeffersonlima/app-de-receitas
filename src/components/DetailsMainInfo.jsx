@@ -40,11 +40,22 @@ DetailsMainInfo.propTypes = {
   isCopied: PropTypes.bool.isRequired,
   recipeType: PropTypes.string.isRequired,
   recipe: PropTypes.shape({
-    strMealThumb: PropTypes.string.isRequired,
-    strDrinkThumb: PropTypes.string.isRequired,
-    strMeal: PropTypes.string.isRequired,
-    strDrink: PropTypes.string.isRequired,
-    strCategory: PropTypes.string.isRequired,
-    strAlcoholic: PropTypes.string.isRequired,
-  }).isRequired,
+    strMealThumb: PropTypes.string,
+    strDrinkThumb: PropTypes.string,
+    strMeal: PropTypes.string,
+    strDrink: PropTypes.string,
+    strCategory: PropTypes.string,
+    strAlcoholic: PropTypes.string,
+  }),
+};
+
+DetailsMainInfo.defaultProps = {
+  recipe: {
+    strMeal: '',
+    strDrink: '',
+    strMealThumb: '',
+    strDrinkThumb: '',
+    strCategory: '',
+    strAlcoholic: '',
+  },
 };

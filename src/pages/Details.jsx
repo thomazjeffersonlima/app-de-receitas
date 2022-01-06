@@ -20,6 +20,7 @@ export default function Details({ inProgress }) {
   const [recipeType, setRecipeType] = useState('');
   const [recommendations, setRecommendations] = useState([]);
   const [isCopied, setIsCopied] = useState(false);
+  const [completedIngredients, setCompletedIngredients] = useState(0);
 
   useEffect(() => {
     async function getRecipe() {
@@ -91,6 +92,8 @@ export default function Details({ inProgress }) {
               ingredients={ ingredients }
               id={ id }
               recipeType={ recipeType }
+              completedIngredients={ completedIngredients }
+              setCompletedIngredients={ setCompletedIngredients }
             />
           ) : (
             <ul>
@@ -122,7 +125,7 @@ export default function Details({ inProgress }) {
               type="button"
               data-testid="finish-recipe-btn"
               className="details-begin-recipe"
-              // disabled={ isRecipeInompleted() }
+              disabled={ completedIngredients !== ingredients.length }
             >
               Finalizar receita
             </button>

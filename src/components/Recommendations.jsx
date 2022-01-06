@@ -35,7 +35,5 @@ export default function Recommendations({
 Recommendations.propTypes = {
   inProgress: PropTypes.bool.isRequired,
   recipeType: PropTypes.string.isRequired,
-  recommendations: PropTypes.shape({
-    length: PropTypes.number,
-  }).isRequired,
+  recommendations: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
