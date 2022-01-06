@@ -1,16 +1,19 @@
 import React, { useContext, useEffect } from 'react';
-import { Link } from 'react-router-dom';
 import Header from '../components/Header';
 import RecipesContext from '../contexts/RecipesContext';
 import Footer from '../components/Footer';
 import fetchRecipes from '../services/fetchApi';
 import DrinkCategories from '../components/DrinkCategories';
 import '../styles/RecipesCards.css';
+import DrinksRecipesCards from '../components/DrinksRecipesCards';
 
 export default function Drinks() {
-  const { drinksRecipes, setDrinksRecipes,
-    setDefaultDrinkRecipes } = useContext(RecipesContext);
-  const maxLength = 12;
+  const {
+    drinksRecipes,
+    setDrinksRecipes,
+    setDefaultDrinkRecipes,
+  } = useContext(RecipesContext);
+  const MAX_LENGTH = 12;
 
   useEffect(() => {
     async function responseApi() {
@@ -31,25 +34,14 @@ export default function Drinks() {
       <Header title="Bebidas" />
       <DrinkCategories />
       <div className="recipes-cards">
-        {drinksRecipes && drinksRecipes
-          .slice(0, maxLength)
-          .map(({ strDrinkThumb, strDrink, idDrink }, index) => (
-            <Link key={ index } to={ `/bebidas/${idDrink}` }>
-              <div
-                data-testid={ `${index}-recipe-card` }
-                className="recipe-card"
-              >
-                <img
-                  src={ strDrinkThumb }
-                  alt=""
-                  data-testid={ `${index}-card-img` }
-                />
-                <p data-testid={ `${index}-card-name` } className="recipe-name">
-                  {strDrink}
-                </p>
-              </div>
-            </Link>
-          ))}
+        {drinksRecipes && (
+          <DrinksRecipesCards
+            recipes={ drinksRecipes }
+            maxRecipes={ MAX_LENGTH }
+            testId="recipe-card"
+            titleTestId="card-name"
+          />
+        )}
       </div>
       <Footer />
     </>
