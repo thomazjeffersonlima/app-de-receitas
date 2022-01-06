@@ -30,18 +30,18 @@ export default function IngredientsProgress({ ingredients, id, recipeType }) {
   return (
     <div>
       {ingredients.map((ingredient, index) => (
-        <div key={ ingredient }>
+        <div key={ ingredient } data-testid={ `${index}-ingredient-step` }>
+          <input
+            className="check-with-label"
+            type="checkbox"
+            id={ ingredient }
+            value={ ingredient }
+            onClick={ (event) => handleClick(event.target.checked, ingredient) }
+          />
           <label
             htmlFor={ ingredient }
-            data-testid={ `${index}-ingredient-step` }
-            className="ingredient-checked"
+            className="label-for-check"
           >
-            <input
-              type="checkbox"
-              id={ ingredient }
-              value={ ingredient }
-              onClick={ (event) => handleClick(event.target.checked, ingredient) }
-            />
             { ingredient }
           </label>
         </div>

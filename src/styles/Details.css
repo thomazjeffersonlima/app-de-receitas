@@ -19,6 +19,7 @@
   position: fixed;
 }
 
-.ingredient-checked {
+/* fonte: https://stackoverflow.com/questions/5275857/highlight-label-if-checkbox-is-checked */
+.check-with-label:checked + .label-for-check {
   text-decoration: line-through;
 }
