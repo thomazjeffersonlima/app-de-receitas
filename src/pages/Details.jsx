@@ -2,6 +2,7 @@ import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
 import ReactPlayer from 'react-player/youtube';
 import { Link, useLocation } from 'react-router-dom';
+import copy from 'clipboard-copy';
 import shareIcon from '../images/shareIcon.svg';
 import whiteHeart from '../images/whiteHeartIcon.svg';
 import fetchRecipeById from '../services/fetchRecipeById';
@@ -18,6 +19,7 @@ export default function Details({ inProgress }) {
   const [recipe, setRecipe] = useState({});
   const [recipeType, setRecipeType] = useState('');
   const [recommendations, setRecommendations] = useState([]);
+  const [isCopied, setIsCopied] = useState(false);
 
   useEffect(() => {
     async function getRecipe() {
@@ -38,7 +40,6 @@ export default function Details({ inProgress }) {
         setRecommendations(getFoodRecomendations);
         setRecipeType('bebida');
         const { drinks } = await fetchRecipeById('bebida', id);
-        console.log(drinks[0]);
         setRecipe(drinks[0]);
       }
     }
@@ -52,15 +53,31 @@ export default function Details({ inProgress }) {
     .filter((entrie) => entrie[0].includes('strMeasure') && entrie[1])
     .map((element) => element[1]);
 
+  const handleShare = () => {
+    const COPIED_MESSAGE = 4000;
+
+    setIsCopied(true);
+    setInterval(() => {
+      setIsCopied(false);
+    }, COPIED_MESSAGE);
+    copy(window.location.href);
+  };
+
   return (
     Object.keys(recipe).length > 0 && (
-      <section>
+      <section className="details-wrapper">
+        {isCopied && (
+          <div className="copied-message">
+            <p>Link copiado!</p>
+          </div>
+        )}
         <img
           src={
             recipeType === 'comida' ? recipe.strMealThumb : recipe.strDrinkThumb
           }
           alt="recipe thumb"
           data-testid="recipe-photo"
+          className="details-img"
         />
         <h2 data-testid="recipe-title">
           {recipeType === 'comida' ? recipe.strMeal : recipe.strDrink}
@@ -73,6 +90,7 @@ export default function Details({ inProgress }) {
           src={ shareIcon }
           alt="share icon"
           data-testid="share-btn"
+          onClick={ handleShare }
         />
         <input
           type="image"
@@ -82,13 +100,15 @@ export default function Details({ inProgress }) {
         />
         <div>
           <p>Ingredientes</p>
-          { inProgress ? (<IngredientsProgress
-            ingredients={ ingredients }
-            id={ id }
-            recipeType={ recipeType }
-          />) : (
+          {inProgress ? (
+            <IngredientsProgress
+              ingredients={ ingredients }
+              id={ id }
+              recipeType={ recipeType }
+            />
+          ) : (
             <ul>
-              { ingredients.map((ingredient, index) => (
+              {ingredients.map((ingredient, index) => (
                 <li
                   key={ ingredient }
                   data-testid={ `${index}-ingredient-name-and-measure` }
@@ -100,10 +120,16 @@ export default function Details({ inProgress }) {
           )}
         </div>
         <p data-testid="instructions">{recipe.strInstructions}</p>
-        {!inProgress && (
-          recipeType === 'comida' && (
-            <ReactPlayer url={ recipe.strYoutube } controls data-testid="video" />
-          )
+        {recipeType === 'comida' && (
+          <ReactPlayer
+            url={ recipe.strYoutube }
+            controls
+            data-testid="video"
+            className="details-video"
+          />
+        )}
+        {!inProgress && recipeType === 'comida' && (
+          <ReactPlayer url={ recipe.strYoutube } controls data-testid="video" />
         )}
         {!inProgress && (
           <div className="recommentadions-wrapper">
