@@ -1,17 +1,20 @@
 import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
-import ReactPlayer from 'react-player/youtube';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useHistory } from 'react-router-dom';
 import copy from 'clipboard-copy';
 import shareIcon from '../images/shareIcon.svg';
 import whiteHeart from '../images/whiteHeartIcon.svg';
 import fetchRecipeById from '../services/fetchRecipeById';
 import fetchRecipes from '../services/fetchApi';
-import FoodRecipeCard from '../components/FoodRecipeCard';
-import DrinksRecipesCards from '../components/DrinksRecipesCards';
+import DetailsMainInfo from '../components/DetailsMainInfo';
+import DetailsVideo from '../components/DetailsVideo';
+import Recommendations from '../components/Recommendations';
+import DetailsIngredients from '../components/DetailsIngredients';
+import handleCompleteRecipe from '../services/doneRecipes';
 import '../styles/Details.css';
 
 export default function Details({ inProgress }) {
+  const history = useHistory();
   const { pathname } = useLocation();
   const id = pathname.replace(/\D/g, '');
 
@@ -19,6 +22,7 @@ export default function Details({ inProgress }) {
   const [recipeType, setRecipeType] = useState('');
   const [recommendations, setRecommendations] = useState([]);
   const [isCopied, setIsCopied] = useState(false);
+  const [completedIngredients, setCompletedIngredients] = useState(0);
 
   useEffect(() => {
     async function getRecipe() {
@@ -62,28 +66,24 @@ export default function Details({ inProgress }) {
     copy(window.location.href);
   };
 
+  const recipeInfo = {
+    id: recipeType === 'comida' ? recipe.idMeal : recipe.idDrink,
+    type: recipeType,
+    area: recipe.strArea || '',
+    category: recipe.strCategory,
+    alcoholicOrNot: recipe.strAlcoholic || '',
+    name: recipeType === 'comida' ? recipe.strMeal : recipe.strDrink,
+    image: recipeType === 'comida' ? recipe.strMealThumb : recipe.strDrinkThumb,
+  };
+
   return (
     Object.keys(recipe).length > 0 && (
       <section className="details-wrapper">
-        {isCopied && (
-          <div className="copied-message">
-            <p>Link copiado!</p>
-          </div>
-        )}
-        <img
-          src={
-            recipeType === 'comida' ? recipe.strMealThumb : recipe.strDrinkThumb
-          }
-          alt="recipe thumb"
-          data-testid="recipe-photo"
-          className="details-img"
+        <DetailsMainInfo
+          isCopied={ isCopied }
+          recipeType={ recipeType }
+          recipe={ recipe }
         />
-        <h2 data-testid="recipe-title">
-          {recipeType === 'comida' ? recipe.strMeal : recipe.strDrink}
-        </h2>
-        <p data-testid="recipe-category">
-          {recipeType === 'comida' ? recipe.strCategory : recipe.strAlcoholic}
-        </p>
         <input
           type="image"
           src={ shareIcon }
@@ -97,47 +97,39 @@ export default function Details({ inProgress }) {
           alt="favorite icon"
           data-testid="favorite-btn"
         />
-        <div>
-          <p>Ingredientes</p>
-          <ul>
-            {ingredients.map((ingredient, index) => (
-              <li
-                key={ ingredient }
-                data-testid={ `${index}-ingredient-name-and-measure` }
-              >
-                {`${ingredient} - ${measure[index]}`}
-              </li>
-            ))}
-          </ul>
-        </div>
+        <DetailsIngredients
+          inProgress={ inProgress }
+          ingredients={ ingredients }
+          id={ id }
+          recipeType={ recipeType }
+          completedIngredients={ completedIngredients }
+          setCompletedIngredients={ setCompletedIngredients }
+          measure={ measure }
+        />
         <p data-testid="instructions">{recipe.strInstructions}</p>
-        {recipeType === 'comida' && (
-          <ReactPlayer
-            url={ recipe.strYoutube }
-            controls
-            data-testid="video"
-            className="details-video"
-          />
-        )}
-        <div className="recommentadions-wrapper">
-          {recommendations.length > 0
-            && (recipeType === 'comida' ? (
-              <DrinksRecipesCards
-                recipes={ recommendations }
-                maxRecipes={ 6 }
-                testId="recomendation-card"
-                titleTestId="recomendation-title"
-              />
-            ) : (
-              <FoodRecipeCard
-                recipes={ recommendations }
-                maxRecipes={ 6 }
-                testId="recomendation-card"
-                titleTestId="recomendation-title"
-              />
-            ))}
-        </div>
-        {!inProgress && (
+        <DetailsVideo
+          recipe={ recipe }
+          inProgress={ inProgress }
+          recipeType={ recipeType }
+        />
+        <Recommendations
+          inProgress={ inProgress }
+          recommendations={ recommendations }
+          recipeType={ recipeType }
+        />
+        {inProgress ? (
+          <button
+            type="button"
+            data-testid="finish-recipe-btn"
+            className="details-begin-recipe"
+            disabled={ completedIngredients !== ingredients.length }
+            onClick={ () => {
+              handleCompleteRecipe(recipe, history, recipeInfo);
+            } }
+          >
+            Finalizar receita
+          </button>
+        ) : (
           <Link to={ `${pathname}/in-progress` }>
             <button
               type="button"

@@ -16,6 +16,7 @@ import ExploreFoodIngredients from './pages/ExploreFoodIngredients';
 import ExploreByArea from './pages/ExploreByArea';
 import InProgress from './pages/InProgress';
 import NotFound from './pages/NotFound';
+import ReceitasFeitas from './pages/ReceitasFeitas';
 
 function App() {
   return (
@@ -55,6 +56,11 @@ function App() {
             exact
             path="/bebidas/:id/in-progress"
             component={ InProgress }
+          />
+          <Route
+            exact
+            path="/receitas-feitas"
+            component={ ReceitasFeitas }
           />
           <Route exact path="*" component={ NotFound } />
         </Switch>
