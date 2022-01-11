@@ -32,7 +32,7 @@ export default function Details({ inProgress }) {
         (favorite) => favorite.id === id,
       ),
     );
-  }, []);
+  }, [id]);
 
   useEffect(() => {
     async function getRecipe() {
@@ -86,8 +86,6 @@ export default function Details({ inProgress }) {
         />
         <DetailsFavShare
           setIsCopied={ setIsCopied }
-          recipeType={ recipeType }
-          recipe={ recipe }
           setIsFavorite={ setIsFavorite }
           recipeInfo={ recipeInfo }
           isFavorite={ isFavorite }
