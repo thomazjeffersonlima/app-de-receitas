@@ -17,6 +17,7 @@ import ExploreByArea from './pages/ExploreByArea';
 import InProgress from './pages/InProgress';
 import NotFound from './pages/NotFound';
 import ReceitasFeitas from './pages/ReceitasFeitas';
+import FavoriteRecipes from './pages/FavoriteRecipes';
 
 function App() {
   return (
@@ -62,6 +63,7 @@ function App() {
             path="/receitas-feitas"
             component={ ReceitasFeitas }
           />
+          <Route exact path="/receitas-favoritas" component={ FavoriteRecipes } />
           <Route exact path="*" component={ NotFound } />
         </Switch>
       </RecipesProvider>
