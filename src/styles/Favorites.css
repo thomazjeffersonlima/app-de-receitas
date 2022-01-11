@@ -1,0 +1,26 @@
+.favorites-wrapper {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.favorite-recipe {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 40px;
+  max-width: 22rem;
+}
+
+.favorite-recipe-preview {
+  max-width: 50%;
+}
+
+.favorite-recipe-info {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 50%;
+}

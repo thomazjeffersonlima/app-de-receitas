@@ -1,10 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import copy from 'clipboard-copy';
+import { useHistory } from 'react-router-dom';
 import Header from '../components/Header';
 import shareIcon from '../images/shareIcon.svg';
 import blackHeart from '../images/blackHeartIcon.svg';
+import '../styles/Favorites.css';
 
 export default function FavoriteRecipes() {
+  const history = useHistory();
+
   const [favoriteRecipes, setFavoriteRecipes] = useState([]);
   const [isCopied, setIsCopied] = useState(false);
   const [filter, setFilter] = useState('');
@@ -37,6 +41,10 @@ export default function FavoriteRecipes() {
     );
     localStorage.setItem('favoriteRecipes', JSON.stringify(favoritesFilter));
     setFavoriteRecipes(favoritesFilter);
+  };
+
+  const handleRedirect = (type, id) => {
+    history.push(`/${type}s/${id}`);
   };
 
   return (
@@ -81,8 +89,16 @@ export default function FavoriteRecipes() {
                     { id, type, category, area, alcoholicOrNot, name, image },
                     index,
                   ) => (
-                    <div key={ id }>
-                      <div>
+                    <div key={ id } className="favorite-recipe">
+                      <input
+                        type="image"
+                        src={ image }
+                        alt="recipe preview"
+                        className="favorite-recipe-preview"
+                        onClick={ () => handleRedirect(type, id) }
+                        data-testid={ `${index}-horizontal-image` }
+                      />
+                      <div className="favorite-recipe-info">
                         {type === 'comida' ? (
                           <p data-testid={ `${index}-horizontal-top-text` }>
                             {`${area} - ${category}`}
@@ -92,7 +108,13 @@ export default function FavoriteRecipes() {
                             {alcoholicOrNot}
                           </p>
                         )}
-                        <p data-testid={ `${index}-horizontal-name` }>{name}</p>
+                        <button
+                          type="button"
+                          onClick={ () => handleRedirect(type, id) }
+                          data-testid={ `${index}-horizontal-name` }
+                        >
+                          {name}
+                        </button>
                         <div>
                           <input
                             type="image"
@@ -110,11 +132,6 @@ export default function FavoriteRecipes() {
                           />
                         </div>
                       </div>
-                      <img
-                        src={ image }
-                        alt="recipe preview"
-                        data-testid={ `${index}-horizontal-image` }
-                      />
                     </div>
                   ),
                 )}
