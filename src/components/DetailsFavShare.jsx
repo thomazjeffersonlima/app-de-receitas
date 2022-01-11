@@ -19,7 +19,7 @@ export default function DetailsFavShare({
     setInterval(() => {
       setIsCopied(false);
     }, COPIED_MESSAGE);
-    copy(window.location.href);
+    copy(window.location.href.split('/in-progress')[0]);
   };
 
   const handleFavorite = () => {
