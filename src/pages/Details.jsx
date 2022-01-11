@@ -1,9 +1,6 @@
 import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
 import { Link, useLocation, useHistory } from 'react-router-dom';
-import copy from 'clipboard-copy';
-import shareIcon from '../images/shareIcon.svg';
-import whiteHeart from '../images/whiteHeartIcon.svg';
 import fetchRecipeById from '../services/fetchRecipeById';
 import fetchRecipes from '../services/fetchApi';
 import DetailsMainInfo from '../components/DetailsMainInfo';
@@ -12,6 +9,7 @@ import Recommendations from '../components/Recommendations';
 import DetailsIngredients from '../components/DetailsIngredients';
 import handleCompleteRecipe from '../services/doneRecipes';
 import '../styles/Details.css';
+import DetailsFavShare from '../components/DetailsFavShare';
 
 export default function Details({ inProgress }) {
   const history = useHistory();
@@ -23,6 +21,18 @@ export default function Details({ inProgress }) {
   const [recommendations, setRecommendations] = useState([]);
   const [isCopied, setIsCopied] = useState(false);
   const [completedIngredients, setCompletedIngredients] = useState(0);
+  const [isFavorite, setIsFavorite] = useState(false);
+
+  useEffect(() => {
+    if (!JSON.parse(localStorage.getItem('favoriteRecipes'))) {
+      localStorage.setItem('favoriteRecipes', JSON.stringify([]));
+    }
+    setIsFavorite(
+      JSON.parse(localStorage.getItem('favoriteRecipes')).some(
+        (favorite) => favorite.id === id,
+      ),
+    );
+  }, []);
 
   useEffect(() => {
     async function getRecipe() {
@@ -56,16 +66,6 @@ export default function Details({ inProgress }) {
     .filter((entrie) => entrie[0].includes('strMeasure') && entrie[1])
     .map((element) => element[1]);
 
-  const handleShare = () => {
-    const COPIED_MESSAGE = 4000;
-
-    setIsCopied(true);
-    setInterval(() => {
-      setIsCopied(false);
-    }, COPIED_MESSAGE);
-    copy(window.location.href);
-  };
-
   const recipeInfo = {
     id: recipeType === 'comida' ? recipe.idMeal : recipe.idDrink,
     type: recipeType,
@@ -84,18 +84,14 @@ export default function Details({ inProgress }) {
           recipeType={ recipeType }
           recipe={ recipe }
         />
-        <input
-          type="image"
-          src={ shareIcon }
-          alt="share icon"
-          data-testid="share-btn"
-          onClick={ handleShare }
-        />
-        <input
-          type="image"
-          src={ whiteHeart }
-          alt="favorite icon"
-          data-testid="favorite-btn"
+        <DetailsFavShare
+          setIsCopied={ setIsCopied }
+          recipeType={ recipeType }
+          recipe={ recipe }
+          setIsFavorite={ setIsFavorite }
+          recipeInfo={ recipeInfo }
+          isFavorite={ isFavorite }
+          id={ id }
         />
         <DetailsIngredients
           inProgress={ inProgress }
@@ -136,7 +132,7 @@ export default function Details({ inProgress }) {
               data-testid="start-recipe-btn"
               className="details-begin-recipe"
             >
-              Inicar Receita
+              Inicar receita
             </button>
           </Link>
         )}
