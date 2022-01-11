@@ -8,8 +8,9 @@ import DetailsVideo from '../components/DetailsVideo';
 import Recommendations from '../components/Recommendations';
 import DetailsIngredients from '../components/DetailsIngredients';
 import handleCompleteRecipe from '../services/doneRecipes';
-import '../styles/Details.css';
 import DetailsFavShare from '../components/DetailsFavShare';
+import { handleDetailsButtonText, checkDoneRecipes } from '../services/checkLocalStorage';
+import '../styles/Details.css';
 
 export default function Details({ inProgress }) {
   const history = useHistory();
@@ -129,8 +130,9 @@ export default function Details({ inProgress }) {
               type="button"
               data-testid="start-recipe-btn"
               className="details-begin-recipe"
+              style={ { display: checkDoneRecipes(id) } }
             >
-              Inicar receita
+              {handleDetailsButtonText(id, recipeType)}
             </button>
           </Link>
         )}
