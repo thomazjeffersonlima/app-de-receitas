@@ -1,11 +1,13 @@
 import PropTypes from 'prop-types';
 import React, { useState, useEffect } from 'react';
 import copy from 'clipboard-copy';
+import Alert from '../components/Alert';
 import RecipesDoneFilter from '../components/RecipesDoneFilter';
 import shared from '../images/shareIcon.svg';
 
 export default function ReceitasFeitas({ history }) {
   const [listObjectDoneRicipes, setListObjectDoneRicipes] = useState([]);
+  const [copyMsg, setCopyMsg] = useState(false);
   const [filtro, setFiltro] = useState('');
 
   const handleRedirect = (id, type) => {
@@ -13,11 +15,15 @@ export default function ReceitasFeitas({ history }) {
   };
 
   const handleShare = (id, type) => {
+    const COPIED_MESSAGE = 4000;
     const typeAddS = type.concat('s');
     const idConcat = `/${id}`;
     const typeConcat = `/${typeAddS}`;
+    setCopyMsg(true);
+    setInterval(() => {
+      setCopyMsg(false);
+    }, COPIED_MESSAGE);
     copy(window.location.origin + typeConcat + idConcat);
-    global.alert('Link copiado!');
   };
 
   useEffect(() => {
@@ -80,6 +86,9 @@ export default function ReceitasFeitas({ history }) {
 
   return (
     <div>
+      {
+        copyMsg && <Alert msg="Link copiado!" />
+      }
       <RecipesDoneFilter setFiltro={ setFiltro } />
       {
         renderRecipesDone()
