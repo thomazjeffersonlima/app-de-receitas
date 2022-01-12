@@ -1,7 +1,7 @@
 .Alert-container {
   background-color: rgb(7, 7, 219);
   color: rgb(250, 250, 250);
-  position: absolute;
   padding: 20px;
+  position: absolute;
   text-align: center;
 }
